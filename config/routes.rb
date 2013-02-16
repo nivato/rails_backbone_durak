@@ -1,4 +1,12 @@
 RailsBackboneDurak::Application.routes.draw do
+  get "game/index"
+
+  resources :cardholders
+
+
+  resources :cards
+
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

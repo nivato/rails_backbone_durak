@@ -1,0 +1,23 @@
+<h1>Listing cardholders</h1>
+
+<table>
+  <tr>
+    <th>Type</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @cardholders.each do |cardholder| %>
+  <tr>
+    <td><%= cardholder.type %></td>
+    <td><%= link_to 'Show', cardholder %></td>
+    <td><%= link_to 'Edit', edit_cardholder_path(cardholder) %></td>
+    <td><%= link_to 'Destroy', cardholder, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Cardholder', new_cardholder_path %>

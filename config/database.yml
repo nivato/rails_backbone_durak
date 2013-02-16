@@ -14,9 +14,9 @@ development:
   reconnect: false
   database: rails_backbone_durak_development
   pool: 5
-  username: root
-  password:
-  host: localhost
+  username: durak_admin
+  password: durak1234
+  host: 127.0.0.1
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
