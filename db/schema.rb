@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130216235910) do
+ActiveRecord::Schema.define(:version => 20130217111727) do
 
   create_table "cardholders", :force => true do |t|
     t.string   "ch_type"
@@ -25,6 +25,22 @@ ActiveRecord::Schema.define(:version => 20130216235910) do
     t.string   "image"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "game_logs", :force => true do |t|
+    t.integer  "game_id"
+    t.integer  "cardholder_id"
+    t.integer  "card_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "game_logs", ["game_id", "cardholder_id", "card_id"], :name => "index_game_logs_on_game_id_and_cardholder_id_and_card_id"
+
+  create_table "games", :force => true do |t|
+    t.string   "game_session"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
 end
