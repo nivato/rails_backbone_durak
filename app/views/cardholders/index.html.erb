@@ -2,7 +2,7 @@
 
 <table>
   <tr>
-    <th>Type</th>
+    <th>ch_type</th>
     <th></th>
     <th></th>
     <th></th>
@@ -10,7 +10,7 @@
 
 <% @cardholders.each do |cardholder| %>
   <tr>
-    <td><%= cardholder.type %></td>
+    <td><%= cardholder.ch_type %></td>
     <td><%= link_to 'Show', cardholder %></td>
     <td><%= link_to 'Edit', edit_cardholder_path(cardholder) %></td>
     <td><%= link_to 'Destroy', cardholder, method: :delete, data: { confirm: 'Are you sure?' } %></td>

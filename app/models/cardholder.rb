@@ -1,3 +1,3 @@
 class Cardholder < ActiveRecord::Base
-  attr_accessible :type
+  attr_accessible :ch_type
 end
