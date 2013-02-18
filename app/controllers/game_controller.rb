@@ -22,6 +22,16 @@ class GameController < ApplicationController
         GameLog.create(:game_id => game.id, :cardholder_id => deck.id, :card_id => card.id)
       end
       shuffle_deck(game)
+      serve_cards_a_player(6, game.id)
+    end
+  end
+  
+  def serve_cards_a_player(number_of_cards, game_id)
+    deck = Cardholder.deck.first
+    player = Cardholder.player.first
+    deck_logs = GameLog.logs_for(game_id, deck.id).limit(number_of_cards)
+    deck_logs.each do |log|
+      log.update_attribute("cardholder_id", player.id)
     end
   end
   

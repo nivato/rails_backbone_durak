@@ -1,6 +1,7 @@
 RailsBackboneDurak::Application.routes.draw do
   resources :game
   resources :deck
+  resources :player
 
 
   # The priority is based upon order of creation:

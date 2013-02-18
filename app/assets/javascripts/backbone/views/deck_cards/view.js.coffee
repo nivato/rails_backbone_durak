@@ -16,5 +16,4 @@ class RailsBackboneDurak.Views.DeckCards.View extends Backbone.View
   render: =>
     $(@el).html(@template(deckCards: @options.deckCards.toJSON() ))
     @addAll()
-
     return this
