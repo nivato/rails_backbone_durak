@@ -21,6 +21,17 @@ class GameController < ApplicationController
       Card.all.each do |card|
         GameLog.create(:game_id => game.id, :cardholder_id => deck.id, :card_id => card.id)
       end
+      shuffle_deck(game)
+    end
+  end
+  
+  def shuffle_deck(game)
+    positions = 1.upto(36).to_a
+    positions.shuffle!
+    deck = Cardholder.deck.first
+    logs = GameLog.logs_for(game.id, deck.id)
+    36.times do |i|
+      logs[i].update_attribute("position", positions[i])
     end
   end
   

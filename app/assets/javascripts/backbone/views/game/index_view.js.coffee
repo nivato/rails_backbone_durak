@@ -5,7 +5,7 @@ class RailsBackboneDurak.Views.Game.IndexView extends Backbone.View
     super
   
   template: JST["backbone/templates/game/index"]
-
+  
   addAll: () =>
     deck_view = new RailsBackboneDurak.Views.DeckCards.View(deckCards: @options.deck_cards)
     @$("#deck-cards").append(deck_view.render().el)
