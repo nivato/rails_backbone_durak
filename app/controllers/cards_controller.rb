@@ -16,7 +16,7 @@ class CardsController < ApplicationController
     @card = Card.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html
       format.json { render json: @card }
     end
   end
