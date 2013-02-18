@@ -1,10 +1,13 @@
 class GameController < ApplicationController
-  
+  respond_to :json
   before_filter :setup_game_session
   
   def index
     pupulate_db
-    redirect_to :controller => "cards", :action => "index"
+    respond_to do |format|
+      format.html
+      format.json
+    end
   end
   
   private
