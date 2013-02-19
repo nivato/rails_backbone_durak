@@ -3,6 +3,8 @@ RailsBackboneDurak.Views.AttackerCards ||= {}
 class RailsBackboneDurak.Views.AttackerCards.Attacker extends Backbone.View
   template: JST["backbone/templates/attacker_cards/attacker"]
   
+  tagName: "td"
+  
   initialize: () ->
     @options.attackerCards.bind('reset', @addAll)
 

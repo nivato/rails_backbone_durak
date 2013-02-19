@@ -3,6 +3,8 @@ RailsBackboneDurak.Views.DefenderCards ||= {}
 class RailsBackboneDurak.Views.DefenderCards.Defender extends Backbone.View
   template: JST["backbone/templates/defender_cards/defender"]
   
+  tagName: "td"
+  
   initialize: () ->
     @options.defenderCards.bind('reset', @addAll)
 

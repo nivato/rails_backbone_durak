@@ -10,12 +10,33 @@ class PlayerController < ApplicationController
     card_logs.each do |log|
       @player_cards << Card.find(log.card_id)
     end
-
+    
     respond_to do |format|
       format.html
       format.json { respond_with @player_cards }
     end
   end
+
+  # DELETE /decks/1
+  # DELETE /decks/1.json
+  def destroy
+    card = Card.find(params[:id])
+    game = Game.where(:game_session => session[:game_session]).first
+    player = Cardholder.player.first
+    game_log = GameLog.where(:game_id => game.id, :cardholder_id => player.id, :card_id => card.id).first
+    table = Cardholder.table.first
+    positions = GameLog.select("position").where(:game_id => game.id, :cardholder_id => table.id)
+    max_position = positions.to_a.max ? positions.to_a.max : 1
+    game_log.update_attributes(:cardholder_id => table.id, :played_by => player.id, :position => max_position)
+    
+    respond_to do |format|
+      format.html
+      format.json { head :no_content }
+    end
+  end
+
+
+
 
   # GET /decks/1
   # GET /decks/1.json
@@ -76,15 +97,4 @@ class PlayerController < ApplicationController
     end
   end
 
-  # DELETE /decks/1
-  # DELETE /decks/1.json
-  def destroy
-    @deck = Deck.find(params[:id])
-    @deck.destroy
-
-    respond_to do |format|
-      format.html { redirect_to decks_url }
-      format.json { head :no_content }
-    end
-  end
 end
