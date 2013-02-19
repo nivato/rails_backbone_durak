@@ -8,7 +8,7 @@ class RailsBackboneDurak.Views.AttackerCards.Attacker extends Backbone.View
   
   initialize: () ->
     @options.eventer.bind("update_table", @update_cards)
-    @options.attackerCards.bind('reset', @addAll)
+    @options.attackerCards.bind('reset', @render)
 
   addAll: () =>
     @options.attackerCards.each(@addOne)

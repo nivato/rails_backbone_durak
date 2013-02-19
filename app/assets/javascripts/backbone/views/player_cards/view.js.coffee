@@ -4,7 +4,7 @@ class RailsBackboneDurak.Views.PlayerCards.View extends Backbone.View
   template: JST["backbone/templates/player_cards/view"]
 
   initialize: () ->
-    @options.playerCards.bind('reset', @addAll)
+    @options.playerCards.bind('reset', @render)
 
   addAll: () =>
     @options.playerCards.each(@addOne)

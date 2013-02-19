@@ -6,7 +6,7 @@ class RailsBackboneDurak.Views.DefenderCards.Defender extends Backbone.View
   tagName: "td"
   
   initialize: () ->
-    @options.defenderCards.bind('reset', @addAll)
+    @options.defenderCards.bind('reset', @render)
 
   addAll: () =>
     @options.defenderCards.each(@addOne)
