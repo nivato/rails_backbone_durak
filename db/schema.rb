@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130218133440) do
+ActiveRecord::Schema.define(:version => 20130219073446) do
 
   create_table "cardholders", :force => true do |t|
     t.string   "ch_type"
@@ -34,6 +34,8 @@ ActiveRecord::Schema.define(:version => 20130218133440) do
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
     t.integer  "position"
+    t.integer  "played_by"
+    t.integer  "beated_with"
   end
 
   add_index "game_logs", ["game_id", "cardholder_id", "card_id"], :name => "index_game_logs_on_game_id_and_cardholder_id_and_card_id"
