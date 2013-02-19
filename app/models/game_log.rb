@@ -1,5 +1,5 @@
 class GameLog < ActiveRecord::Base
-  attr_accessible :game_id, :cardholder_id, :card_id, :position
+  attr_accessible :game_id, :cardholder_id, :card_id, :position, :played_by, :beated_with
   belongs_to :game
   belongs_to :cardholder
   belongs_to :card
