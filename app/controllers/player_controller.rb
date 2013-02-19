@@ -26,7 +26,7 @@ class PlayerController < ApplicationController
     game_log = GameLog.where(:game_id => game.id, :cardholder_id => player.id, :card_id => card.id).first
     table = Cardholder.table.first
     positions = GameLog.select("position").where(:game_id => game.id, :cardholder_id => table.id)
-    max_position = positions.to_a.max ? positions.to_a.max : 1
+    max_position = positions.to_a.max ? positions.to_a.max.position + 1 : 1
     game_log.update_attributes(:cardholder_id => table.id, :played_by => player.id, :position => max_position)
     
     respond_to do |format|

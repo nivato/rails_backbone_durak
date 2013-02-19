@@ -10,7 +10,7 @@ class RailsBackboneDurak.Views.PlayerCards.View extends Backbone.View
     @options.playerCards.each(@addOne)
 
   addOne: (playerCard) =>
-    view = new RailsBackboneDurak.Views.PlayerCards.PlayerCardView({model : playerCard})
+    view = new RailsBackboneDurak.Views.PlayerCards.PlayerCardView({model : playerCard, eventer: @options.eventer})
     @$("tbody").append(view.render().el)
 
   render: =>

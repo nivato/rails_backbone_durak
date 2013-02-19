@@ -15,4 +15,5 @@ class RailsBackboneDurak.Views.PlayerCards.PlayerCardView extends Backbone.View
   play_card: ->
     @model.destroy()
     this.remove()
+    @options.eventer.trigger("update_table")
     return false
