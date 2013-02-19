@@ -24,6 +24,8 @@ class GameController < ApplicationController
       shuffle_deck(game)
       serve_cards(6, game.id, Cardholder.player.first.id)
       serve_cards(6, game.id, Cardholder.computer.first.id)
+      game.update_attribute("attacker", Cardholder.player.first.id)
+      game.update_attribute("defender", Cardholder.computer.first.id)
     end
   end
   

@@ -3,6 +3,8 @@ RailsBackboneDurak::Application.routes.draw do
   resources :deck
   resources :player
   resources :computer
+  resources :attacker
+  resources :defender
 
 
   # The priority is based upon order of creation:

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130219103724) do
+ActiveRecord::Schema.define(:version => 20130219142550) do
 
   create_table "cardholders", :force => true do |t|
     t.string   "ch_type"
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(:version => 20130219103724) do
     t.datetime "updated_at",     :null => false
     t.integer  "attacker"
     t.string   "defender_state"
+    t.integer  "defender"
   end
 
 end

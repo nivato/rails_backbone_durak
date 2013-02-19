@@ -10,9 +10,11 @@ class RailsBackboneDurak.Views.Game.IndexView extends Backbone.View
     deck_view = new RailsBackboneDurak.Views.DeckCards.View(deckCards: @options.deck_cards)
     player_view = new RailsBackboneDurak.Views.PlayerCards.View(playerCards: @options.player_cards)
     computer_view = new RailsBackboneDurak.Views.ComputerCards.View(computerCards: @options.computer_cards)
+    table_view = new RailsBackboneDurak.Views.Table.TableView(attacker_cards: @options.attacker_cards, defender_cards: @options.defender_cards)
     @$("#deck-cards").append(deck_view.render().el)
     @$("#player-cards").append(player_view.render().el)
     @$("#computer-cards").append(computer_view.render().el)
+    @$("#table-cards").append(table_view.render().el)
 
   render: =>
     $(@el).html(@template)
