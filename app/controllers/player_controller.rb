@@ -29,6 +29,8 @@ class PlayerController < ApplicationController
     max_position = positions.to_a.max ? positions.to_a.max.position + 1 : 1
     game_log.update_attributes(:cardholder_id => table.id, :played_by => player.id, :position => max_position)
     
+    # make computer to choose card to beat with
+    
     respond_to do |format|
       format.html
       format.json { head :no_content }

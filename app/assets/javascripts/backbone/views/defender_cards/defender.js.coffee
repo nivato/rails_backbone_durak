@@ -6,6 +6,7 @@ class RailsBackboneDurak.Views.DefenderCards.Defender extends Backbone.View
   tagName: "td"
   
   initialize: () ->
+    @options.eventer.bind("update_table", @update_cards)
     @options.defenderCards.bind('reset', @render)
 
   addAll: () =>
@@ -19,3 +20,6 @@ class RailsBackboneDurak.Views.DefenderCards.Defender extends Backbone.View
     $(@el).html(@template(attackerCards: @options.defenderCards.toJSON() ))
     @addAll()
     return this
+
+  update_cards: =>
+    @options.defenderCards.fetch()
