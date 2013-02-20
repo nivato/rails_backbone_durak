@@ -37,15 +37,17 @@ class PlayerController < ApplicationController
     card = Card.find(params[:id])
     game = Game.for_session(session[:game_session]).first
     player = Cardholder.player.first
-    game_log = GameLog.where(:game_id => game.id, :cardholder_id => player.id, :card_id => card.id).first
+    game_log = player.game_logs.where(:game_id => game.id, :card_id => card.id).first
     table = Cardholder.table.first
-    positions = GameLog.select("position").where(:game_id => game.id, :cardholder_id => table.id, :played_by => game.attacker)
+    positions = table.game_logs.select("position").where(:game_id => game.id, :played_by => game.attacker)
     max_position = positions.to_a.max ? positions.to_a.max.position + 1 : 1
     game_log.update_attributes(:cardholder_id => table.id, :played_by => player.id, :position => max_position)
     
     # make computer to choose card to beat with
     computer = Cardholder.computer.first
-    c_game_log = GameLog.where(:game_id => game.id, :cardholder_id => computer.id).order("game_logs.position ASC").first
+    #computer_cards = computer.cards.where(:game_id => game.id).order("game_logs.position ASC")
+    #attacker_card_to_beat = table.cards.where("game_logs.game_id = #{game.id}").where("game_logs.played_by = #{game.attacker}").where("game_logs.beated_with is null")
+    c_game_log = computer.game_logs.where(:game_id => game.id).order("game_logs.position ASC").first
     c_card = Card.find(c_game_log.card_id)
     c_game_log.update_attributes(:cardholder_id => table.id, :played_by => computer.id, :position => max_position)
     game_log.update_attribute("beated_with", c_card.id)
