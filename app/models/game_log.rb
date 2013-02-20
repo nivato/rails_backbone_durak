@@ -4,6 +4,5 @@ class GameLog < ActiveRecord::Base
   belongs_to :cardholder
   belongs_to :card
   
-  scope :card_ids_for, lambda {|game_id, cardholder_id| select("card_id").where(:game_id => game_id, :cardholder_id => cardholder_id).order("position ASC")}
   scope :logs_for, lambda {|game_id, cardholder_id| where(:game_id => game_id, :cardholder_id => cardholder_id).order("position ASC")}
 end

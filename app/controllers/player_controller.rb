@@ -3,13 +3,9 @@ class PlayerController < ApplicationController
   # GET /player
   # GET /player.json
   def index
-    game_id = Game.game_id(session[:game_session]).first.id
-    player_id = Cardholder.player.first.id
-    card_logs = GameLog.card_ids_for(game_id, player_id)
-    @player_cards = []
-    card_logs.each do |log|
-      @player_cards << Card.find(log.card_id)
-    end
+    game = Game.game_id(session[:game_session]).first
+    player = Cardholder.player.first
+    @player_cards = player.cards.where("game_logs.game_id = #{game.id}").order("game_logs.position ASC")
     
     respond_to do |format|
       format.html
@@ -21,7 +17,7 @@ class PlayerController < ApplicationController
   # DELETE /decks/1.json
   def destroy
     card = Card.find(params[:id])
-    game = Game.where(:game_session => session[:game_session]).first
+    game = Game.for_session(session[:game_session]).first
     player = Cardholder.player.first
     game_log = GameLog.where(:game_id => game.id, :cardholder_id => player.id, :card_id => card.id).first
     table = Cardholder.table.first

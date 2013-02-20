@@ -3,19 +3,18 @@ class DeckController < ApplicationController
   # GET /deck
   # GET /deck.json
   def index
-    game_id = Game.game_id(session[:game_session]).first.id
-    deck_id = Cardholder.deck.first.id
-    card_logs = GameLog.card_ids_for(game_id, deck_id)
-    @cards_in_deck = []
-    card_logs.each do |log|
-      @cards_in_deck << Card.find(log.card_id)
-    end
-
+    game = Game.game_id(session[:game_session]).first
+    deck = Cardholder.deck.first
+    @cards_in_deck = deck.cards.where("game_logs.game_id = #{game.id}").order("game_logs.position ASC")
+    
     respond_to do |format|
       format.html
       format.json { respond_with @cards_in_deck }
     end
   end
+
+
+
 
   # GET /decks/1
   # GET /decks/1.json

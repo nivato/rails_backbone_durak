@@ -3,13 +3,9 @@ class DefenderController < ApplicationController
   # GET /defender
   # GET /defender.json
   def index
-    game = Game.where(:game_session => session[:game_session]).first
-    defender_id = Cardholder.find(game.defender)
-    card_logs = GameLog.card_ids_for(game.id, Cardholder.table.first.id).where(:played_by => defender_id)
-    @defender_cards = []
-    card_logs.each do |log|
-      @defender_cards << Card.find(log.card_id)
-    end
+    game = Game.for_session(session[:game_session]).first
+    table = Cardholder.table.first
+    @defender_cards = table.cards.where("game_logs.game_id = #{game.id}").where("game_logs.played_by = #{game.defender}").order("game_logs.position ASC")
 
     respond_to do |format|
       format.html

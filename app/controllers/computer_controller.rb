@@ -3,13 +3,9 @@ class ComputerController < ApplicationController
   # GET /computer
   # GET /computer.json
   def index
-    game_id = Game.game_id(session[:game_session]).first.id
-    computer_id = Cardholder.computer.first.id
-    card_logs = GameLog.card_ids_for(game_id, computer_id)
-    @computer_cards = []
-    card_logs.each do |log|
-      @computer_cards << Card.find(log.card_id)
-    end
+    game = Game.game_id(session[:game_session]).first
+    computer = Cardholder.computer.first
+    @computer_cards = computer.cards.where("game_logs.game_id = #{game.id}").order("game_logs.position ASC")
 
     respond_to do |format|
       format.html
