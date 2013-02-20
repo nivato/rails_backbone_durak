@@ -4,14 +4,27 @@
 
 table {
   background-color: #E5E5FF;
-  width: 100px;
+  width: 80px;
   align: center;
   border-collapse: collapse;
   border: 1px solid #898999;
+}
+
+td {
+  text-align: center;
 }
 
 div#deck-cards, div#player-cards, div#computer-cards {
   float: left;
   display: inline;
   width: 120px;
+}
+
+.playable {
+  background-color: #FFE5FF;
+}
+
+.disabled {
+  background-color: #CFCFCF;
+  color: #919191;
 }

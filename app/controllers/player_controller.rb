@@ -6,8 +6,23 @@ class PlayerController < ApplicationController
     game = Game.game_id(session[:game_session]).first
     player = Cardholder.player.first
     @player_cards = player.cards.select("cards.*, game_logs.position").where("game_logs.game_id = #{game.id}").order("game_logs.position ASC")
-    @player_cards.each do |card|
-      card["playable"] = true
+    
+    table = Cardholder.table.first
+    table_cards = table.cards.where("game_logs.game_id = #{game.id}")
+    
+    if table_cards == []
+      @player_cards.each do |card|
+        card["playable"] = true
+      end
+    else
+      table_ranks = table_cards.collect{|card| card.rank}
+      @player_cards.each do |card|
+        if table_ranks.include? card.rank
+          card["playable"] = true
+        else
+          card["playable"] = false
+        end
+      end
     end
     
     respond_to do |format|

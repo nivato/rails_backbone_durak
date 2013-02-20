@@ -6,7 +6,7 @@ class RailsBackboneDurak.Views.PlayerCards.PlayerCardView extends Backbone.View
   tagName: "tr"
 
   events:
-    "click td"       : "play_card"
+    "click .playable"       : "play_card"
 
   render: ->
     $(@el).html(@template(@model.toJSON() ))
