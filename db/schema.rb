@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130220173029) do
+ActiveRecord::Schema.define(:version => 20130220203011) do
 
   create_table "cardholders", :force => true do |t|
     t.string   "ch_type"
@@ -23,8 +23,10 @@ ActiveRecord::Schema.define(:version => 20130220173029) do
     t.string   "rank"
     t.string   "suit"
     t.string   "image"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.integer  "rank_number"
+    t.string   "suit_char"
   end
 
   create_table "game_logs", :force => true do |t|

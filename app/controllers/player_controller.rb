@@ -45,8 +45,15 @@ class PlayerController < ApplicationController
     
     # make computer to choose card to beat with
     computer = Cardholder.computer.first
-    #computer_cards = computer.cards.where(:game_id => game.id).order("game_logs.position ASC")
-    #attacker_card_to_beat = table.cards.where("game_logs.game_id = #{game.id}").where("game_logs.played_by = #{game.attacker}").where("game_logs.beated_with is null")
+    
+    computer_cards = computer.cards.where("game_logs.game_id = #{game.id}").order("game_logs.position ASC")
+    # attacker_card_to_beat = table.cards.where("game_logs.game_id = #{game.id}").where("game_logs.played_by = #{game.attacker}").where("game_logs.beated_with is null").first
+    attacker_card_to_beat = card
+    trump = Card.find(game.trump)
+    card_to_beat_with = choose_card_to_beat_with(attacker_card_to_beat, computer_cards, trump)
+    
+    
+    
     c_game_log = computer.game_logs.where(:game_id => game.id).order("game_logs.position ASC").first
     c_card = Card.find(c_game_log.card_id)
     c_game_log.update_attributes(:cardholder_id => table.id, :played_by => computer.id, :position => max_position)
@@ -120,6 +127,37 @@ class PlayerController < ApplicationController
         format.json { render json: @deck.errors, status: :unprocessable_entity }
       end
     end
+  end
+  
+  private
+  
+  def choose_card_to_beat_with(attacker_card_to_beat, computer_cards, trump)
+    card_to_beat_with = nil
+    if attacker_card_to_beat.suit_char == trump.suit_char
+      cards_of_same_suit = computer_cards.collect do |comp_card|
+        comp_card if comp_card.suit_char == attacker_card_to_beat.suit_char
+      end.compact!
+      logger.info("CARDS OF SAME SUIT #{cards_of_same_suit.inspect}")
+      unless cards_of_same_suit == []
+        cards_of_higher_rank = cards_of_same_suit.collect do |comp_card|
+          comp_card if comp_card.rank_number > attacker_card_to_beat.rank_number
+        end.compact!
+        logger.info("CARDS OF HIGHER RANK #{cards_of_higher_rank.inspect}")
+        unless cards_of_higher_rank == []
+          ranks = cards_of_higher_rank.collect do |comp_card|
+            comp_card.rank_number
+          end
+          logger.info("RANKS #{ranks.inspect}")
+          min_rank = ranks.to_a.min
+          logger.info("MIN RANK #{min_rank.inspect}")
+          cards_of_higher_rank.each do |comp_card|
+            card_to_beat_with = comp_card if comp_card.rank_number == min_rank
+          end
+        end
+      end
+    end
+    logger.info("CARD TO BEAT WITH #{card_to_beat_with.inspect}")
+    return card_to_beat_with
   end
 
 end

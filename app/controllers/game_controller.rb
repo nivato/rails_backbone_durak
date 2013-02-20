@@ -62,21 +62,33 @@ class GameController < ApplicationController
   end
   
   def pupulate_db_with_cards
-    ranks = ["6", "7", "8", "9", "10", "J", "Q", "K", "A"]
-      suits = [
-        "\u2660", #spades
-        "\u2665", #hearts
-        "\u2666", #diamonds
-        "\u2663", #clubs
-      ]
-      ranks.each do |rank|
-        suits.each do |suit|
-          card = Card.new
-          card.rank = rank
-          card.suit = suit
-          card.save
-        end
+    ranks = {
+      6 => "6", 
+      7 => "7", 
+      8 => "8", 
+      9 => "9", 
+      10 => "10", 
+      11 => "J", 
+      12 => "Q", 
+      13 => "K", 
+      14 => "A"
+    }
+    suits = {
+      "s" => "\u2660", #spades
+      "h" => "\u2665", #hearts
+      "d" => "\u2666", #diamonds
+      "c" => "\u2663", #clubs
+    }
+    ranks.each do |rank_number, rank|
+      suits.each do |suit_char, suit|
+        card = Card.new
+        card.rank = rank
+        card.rank_number = rank_number
+        card.suit = suit
+        card.suit_char = suit_char
+        card.save
       end
+    end
   end
   
   def populate_db_with_cardholders
