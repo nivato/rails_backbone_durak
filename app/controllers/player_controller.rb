@@ -5,7 +5,10 @@ class PlayerController < ApplicationController
   def index
     game = Game.game_id(session[:game_session]).first
     player = Cardholder.player.first
-    @player_cards = player.cards.where("game_logs.game_id = #{game.id}").order("game_logs.position ASC")
+    @player_cards = player.cards.select("cards.*, game_logs.position").where("game_logs.game_id = #{game.id}").order("game_logs.position ASC")
+    @player_cards.each do |card|
+      card["playable"] = true
+    end
     
     respond_to do |format|
       format.html
