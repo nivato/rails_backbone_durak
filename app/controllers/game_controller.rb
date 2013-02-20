@@ -3,16 +3,20 @@ class GameController < ApplicationController
   before_filter :setup_game_session
   
   def index
-    pupulate_db
+    game = Game.game_id(session[:game_session]).first
+    deck = Cardholder.deck.first
+    @trump = deck.cards.where("game_logs.game_id = #{game.id}").order("game_logs.position ASC").last
+    
     respond_to do |format|
       format.html
-      format.json
+      format.json { respond_with @trump }
     end
   end
   
   private
   
   def setup_game_session
+    pupulate_db
     unless session[:game_session]
       game_session = Digest::SHA2.hexdigest("#{Time.now}")
       session[:game_session] = game_session
