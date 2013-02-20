@@ -30,6 +30,14 @@ class PlayerController < ApplicationController
     game_log.update_attributes(:cardholder_id => table.id, :played_by => player.id, :position => max_position)
     
     # make computer to choose card to beat with
+    computer = Cardholder.computer.first
+    c_game_log = GameLog.where(:game_id => game.id, :cardholder_id => computer.id).first
+    c_card = Card.find(c_game_log.card_id)
+    max_position = max_position + 1
+    c_game_log.update_attributes(:cardholder_id => table.id, :played_by => computer.id, :position => max_position)
+    game_log.update_attribute("beated_with", c_card.id)
+    
+    
     
     respond_to do |format|
       format.html
