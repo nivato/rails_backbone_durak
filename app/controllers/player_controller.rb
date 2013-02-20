@@ -3,9 +3,9 @@ class PlayerController < ApplicationController
   # GET /player
   # GET /player.json
   def index
-    game = Game.game_id(session[:game_session]).first
+    game = Game.for_session(session[:game_session]).first
     player = Cardholder.player.first
-    @player_cards = player.cards.select("cards.*, game_logs.position").where("game_logs.game_id = #{game.id}").order("game_logs.position ASC")
+    @player_cards = player.cards.select("cards.id, cards.rank, cards.suit, game_logs.position").where("game_logs.game_id = #{game.id}").order("game_logs.position ASC")
     
     table = Cardholder.table.first
     table_cards = table.cards.where("game_logs.game_id = #{game.id}")
@@ -47,7 +47,6 @@ class PlayerController < ApplicationController
     computer = Cardholder.computer.first
     c_game_log = GameLog.where(:game_id => game.id, :cardholder_id => computer.id).order("game_logs.position ASC").first
     c_card = Card.find(c_game_log.card_id)
-    max_position = max_position
     c_game_log.update_attributes(:cardholder_id => table.id, :played_by => computer.id, :position => max_position)
     game_log.update_attribute("beated_with", c_card.id)
     

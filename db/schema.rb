@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130219142550) do
+ActiveRecord::Schema.define(:version => 20130220173029) do
 
   create_table "cardholders", :force => true do |t|
     t.string   "ch_type"
@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(:version => 20130219142550) do
     t.integer  "attacker"
     t.string   "defender_state"
     t.integer  "defender"
+    t.integer  "trump"
   end
 
 end

@@ -3,9 +3,8 @@ class GameController < ApplicationController
   before_filter :setup_game_session
   
   def index
-    game = Game.game_id(session[:game_session]).first
-    deck = Cardholder.deck.first
-    @trump = deck.cards.where("game_logs.game_id = #{game.id}").order("game_logs.position ASC").last
+    game = Game.for_session(session[:game_session]).first
+    @trump = Card.find(game.trump)
     
     respond_to do |format|
       format.html
@@ -26,6 +25,8 @@ class GameController < ApplicationController
         GameLog.create(:game_id => game.id, :cardholder_id => deck.id, :card_id => card.id)
       end
       shuffle_deck(game)
+      trump = deck.cards.where("game_logs.game_id = #{game.id}").order("game_logs.position ASC").last
+      game.update_attribute("trump", trump.id)
       serve_cards(6, game.id, Cardholder.player.first.id)
       serve_cards(6, game.id, Cardholder.computer.first.id)
       game.update_attribute("attacker", Cardholder.player.first.id)

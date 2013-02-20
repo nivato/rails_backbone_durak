@@ -3,9 +3,9 @@ class DeckController < ApplicationController
   # GET /deck
   # GET /deck.json
   def index
-    game = Game.game_id(session[:game_session]).first
+    game = Game.for_session(session[:game_session]).first
     deck = Cardholder.deck.first
-    @cards_in_deck = deck.cards.select("cards.*, game_logs.position").where("game_logs.game_id = #{game.id}").order("game_logs.position ASC")
+    @cards_in_deck = deck.cards.select("cards.rank, cards.suit, game_logs.position").where("game_logs.game_id = #{game.id}").order("game_logs.position ASC")
     
     respond_to do |format|
       format.html
