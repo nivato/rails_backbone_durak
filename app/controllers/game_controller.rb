@@ -32,8 +32,8 @@ class GameController < ApplicationController
   def serve_cards(number_of_cards, game_id, holder_id)
     deck = Cardholder.deck.first
     deck_logs = GameLog.logs_for(game_id, deck.id).limit(number_of_cards)
-    deck_logs.each do |log|
-      log.update_attribute("cardholder_id", holder_id)
+    number_of_cards.times do |i|
+      deck_logs[i].update_attributes(:cardholder_id => holder_id, :position => i)
     end
   end
   
