@@ -2,8 +2,9 @@ RailsBackboneDurak.Views.GameMessages ||= {}
 
 class RailsBackboneDurak.Views.GameMessages.Index extends Backbone.View
   template: JST["backbone/templates/game_messages/index"]
-  
+
   initialize: () ->
+    @options.eventer.bind("update_table", @update_messages)
     @options.gameMessages.bind('reset', @render)
 
   addAll: () =>
@@ -14,6 +15,10 @@ class RailsBackboneDurak.Views.GameMessages.Index extends Backbone.View
     @$("tbody").append(view.render().el)
 
   render: =>
+    #@$("#trump-card").append(messages_view.render().el)
     $(@el).html(@template(gameMessages: @options.gameMessages.toJSON() ))
     @addAll()
     return this
+  
+  update_messages: =>
+    @options.gameMessages.fetch()

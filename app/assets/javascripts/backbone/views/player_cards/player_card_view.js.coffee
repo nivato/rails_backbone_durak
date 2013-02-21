@@ -13,7 +13,9 @@ class RailsBackboneDurak.Views.PlayerCards.PlayerCardView extends Backbone.View
     return this
 
   play_card: ->
-    @model.destroy()
+    @model.destroy({success: @update_table_callback})
     this.remove()
-    @options.eventer.trigger("update_table")
     return false
+  
+  update_table_callback: =>
+    @options.eventer.trigger("update_table")
