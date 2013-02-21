@@ -7,6 +7,7 @@ class RailsBackboneDurak.Views.Game.IndexView extends Backbone.View
   template: JST["backbone/templates/game/index"]
   
   addAll: () =>
+    buttons_view = new RailsBackboneDurak.Views.Buttons.Index(eventer: @options.eventer, buttons: @options.buttons)
     trump_view = new RailsBackboneDurak.Views.TrumpCards.Index(eventer: @options.eventer, trumpCards: @options.trump_cards)
     deck_view = new RailsBackboneDurak.Views.DeckCards.View(deckCards: @options.deck_cards)
     player_view = new RailsBackboneDurak.Views.PlayerCards.View(eventer: @options.eventer, playerCards: @options.player_cards)
@@ -17,6 +18,7 @@ class RailsBackboneDurak.Views.Game.IndexView extends Backbone.View
     @$("#player-cards").append(player_view.render().el)
     @$("#computer-cards").append(computer_view.render().el)
     @$("#table-cards").append(table_view.render().el)
+    @$("#buttons").append(buttons_view.render().el)
 
   render: =>
     $(@el).html(@template())

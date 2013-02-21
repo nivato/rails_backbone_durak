@@ -14,10 +14,16 @@ td {
   text-align: center;
 }
 
-div#deck-cards, div#player-cards, div#computer-cards {
+div#deck-cards, div#player-cards, div#computer-cards, div#buttons {
   float: left;
   display: inline;
   width: 120px;
+}
+
+div#table-cards {
+  float: left;
+  display: inline;
+  width: 180px;
 }
 
 .playable {
