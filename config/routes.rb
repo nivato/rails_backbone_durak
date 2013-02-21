@@ -5,6 +5,7 @@ RailsBackboneDurak::Application.routes.draw do
   resources :computer
   resources :attacker
   resources :defender
+  resources :trump
 
 
   # The priority is based upon order of creation:
