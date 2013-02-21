@@ -1,15 +1,11 @@
 class GameController < ApplicationController
-  respond_to :json
+  respond_to :json, :html
   before_filter :setup_game_session
   
   def index
     game = Game.for_session(session[:game_session]).first
     @trump = Card.find(game.trump)
-    
-    respond_to do |format|
-      format.html
-      format.json { respond_with @trump }
-    end
+    respond_with @trump
   end
   
   private
