@@ -3,7 +3,6 @@ class ButtonController < ApplicationController
   # GET /button
   # GET /button.json
   def index
-    # buttons: new_game, take_cards, next
     game = Game.for_session(session[:game_session]).first
     player = Cardholder.player.first
     computer = Cardholder.computer.first
@@ -20,7 +19,6 @@ class ButtonController < ApplicationController
     else
       @buttons["take_cards"] = false
     end
-    @buttons["new_game"] = true
     respond_with @buttons
   end
 
