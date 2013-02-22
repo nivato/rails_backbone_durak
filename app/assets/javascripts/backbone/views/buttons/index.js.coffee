@@ -11,7 +11,7 @@ class RailsBackboneDurak.Views.Buttons.Index extends Backbone.View
     @options.buttons.each(@addOne)
 
   addOne: (button) =>
-    view = new RailsBackboneDurak.Views.Buttons.Button({model : button})
+    view = new RailsBackboneDurak.Views.Buttons.Button({model : button, eventer: @options.eventer})
     @$("tbody").append(view.render().el)
 
   render: =>

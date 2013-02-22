@@ -19,9 +19,29 @@ class ButtonController < ApplicationController
     else
       @buttons["take_cards"] = false
     end
+    @buttons["id"] = 1
     respond_with @buttons
   end
-
+  
+  # DELETE /decks/1
+  # DELETE /decks/1.json
+  def destroy
+    game = Game.for_session(session[:game_session]).first
+    table = Cardholder.table.first
+    pile = Cardholder.pile.first
+    if (game.defender_state == "won") || (game.defender_state == "continues")
+      game_logs = table.game_logs.where(:game_id => game.id)
+      game_logs.each do |game_log|
+        game_log.update_attributes(:cardholder_id => pile.id, :played_by => nil, :beated_with => nil, :position => 0)
+      end
+      # switch defender and attacker places
+      attacker_id = game.attacker
+      defender_id = game.defender
+      game.update_attributes(:attacker => defender_id, :defender => attacker_id, :defender_state => "continues")
+    end
+    respond_with []
+  end
+  
   # GET /decks/1
   # GET /decks/1.json
   def show
@@ -50,10 +70,5 @@ class ButtonController < ApplicationController
   def update
     respond_with []
   end
-
-  # DELETE /decks/1
-  # DELETE /decks/1.json
-  def destroy
-    respond_with []
-  end
+  
 end
