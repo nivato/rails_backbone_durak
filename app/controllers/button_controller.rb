@@ -38,6 +38,15 @@ class ButtonController < ApplicationController
       attacker_id = game.attacker
       defender_id = game.defender
       game.update_attributes(:attacker => defender_id, :defender => attacker_id, :defender_state => "continues")
+    else
+      defender = Cardholder.find(game.defender)
+      game_logs = table.game_logs.where(:game_id => game.id)
+      positions = defender.game_logs.select("position").where(:game_id => game.id)
+      max_position = positions.to_a.max ? positions.to_a.max.position : 1
+      game_logs.each do |game_log|
+        game_log.update_attributes(:cardholder_id => game.defender, :played_by => nil, :beated_with => nil, :position => max_position += 1)
+      end
+      game.update_attributes(:defender_state => "continues")
     end
     respond_with []
   end
