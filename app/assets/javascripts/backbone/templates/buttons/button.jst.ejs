@@ -1,1 +1,5 @@
-<td><%= new_game %></td>
+<td>
+<input type="button" id="new_game" value="New Game" <%= new_game ? '' : 'disabled="disabled"' %> />
+<input type="button" id="take_cards" value="Take Cards" <%= take_cards ? '' : 'disabled="disabled"' %> />
+<input type="button" id="next" value="Next" <%= next ? '' : 'disabled="disabled"' %> />
+</td>

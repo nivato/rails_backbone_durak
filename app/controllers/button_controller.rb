@@ -7,8 +7,8 @@ class ButtonController < ApplicationController
     game = Game.for_session(session[:game_session]).first
     @buttons = {}
     @buttons["new_game"] = true
-    @buttons["take_cards"] = true
-    @buttons["next"] = true
+    @buttons["take_cards"] = false
+    @buttons["next"] = false
     respond_with @buttons
   end
 
