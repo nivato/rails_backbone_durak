@@ -4,6 +4,7 @@ class RailsBackboneDurak.Views.Buttons.Index extends Backbone.View
   template: JST["backbone/templates/buttons/index"]
 
   initialize: () ->
+    @options.eventer.bind("update_table", @update_buttons)
     @options.buttons.bind('reset', @render)
 
   addAll: () =>
@@ -17,3 +18,6 @@ class RailsBackboneDurak.Views.Buttons.Index extends Backbone.View
     $(@el).html(@template(buttons: @options.buttons.toJSON() ))
     @addAll()
     return this
+  
+  update_buttons: =>
+    @options.buttons.fetch()

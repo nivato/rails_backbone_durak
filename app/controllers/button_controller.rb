@@ -5,10 +5,22 @@ class ButtonController < ApplicationController
   def index
     # buttons: new_game, take_cards, next
     game = Game.for_session(session[:game_session]).first
+    player = Cardholder.player.first
+    computer = Cardholder.computer.first
+    table = Cardholder.table.first
+    table_cards = table.cards.where("game_logs.game_id = #{game.id}")
     @buttons = {}
+    if ((game.attacker == player.id) && (table_cards != [])) || ((game.attacker == computer.id) && (game.defender_state == "won"))
+      @buttons["next"] = true
+    else
+      @buttons["next"] = false
+    end
+    if (game.attacker == computer.id) && ((game.defender_state == "continues") || (game.defender_state == "defeated")) && (table_cards != [])
+      @buttons["take_cards"] = true
+    else
+      @buttons["take_cards"] = false
+    end
     @buttons["new_game"] = true
-    @buttons["take_cards"] = false
-    @buttons["next"] = false
     respond_with @buttons
   end
 
