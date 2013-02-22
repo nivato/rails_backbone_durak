@@ -2,7 +2,7 @@ class AddAttackerAndDefenderStateColumnsToGames < ActiveRecord::Migration
   
   def up
     add_column "games", "attacker", :integer
-    # defender_state would be either "defeated" or "continues"
+    # defender_state would be either "defeated", "continues" or "won"
     add_column "games", "defender_state", :string
   end
   

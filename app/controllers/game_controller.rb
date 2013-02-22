@@ -27,6 +27,7 @@ class GameController < ApplicationController
       serve_cards(6, game.id, Cardholder.computer.first.id)
       game.update_attribute("attacker", Cardholder.player.first.id)
       game.update_attribute("defender", Cardholder.computer.first.id)
+      game.update_attribute("defender_state", "continues")
     end
   end
   

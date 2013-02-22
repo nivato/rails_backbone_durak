@@ -6,22 +6,12 @@ class PlayerController < ApplicationController
     game = Game.for_session(session[:game_session]).first
     player = Cardholder.player.first
     @player_cards = player.cards.where("game_logs.game_id = #{game.id}").order("game_logs.position ASC")
-    
-    table = Cardholder.table.first
-    table_cards = table.cards.where("game_logs.game_id = #{game.id}")
-    
-    if table_cards == []
-      @player_cards.each do |card|
+    playable_card_ids = get_playable_cards(game, @player_cards).collect{|card| card.id}
+    @player_cards.each do |card|
+      if playable_card_ids.include? card.id
         card["playable"] = true
-      end
-    else
-      table_ranks = table_cards.collect{|card| card.rank}
-      @player_cards.each do |card|
-        if table_ranks.include? card.rank
-          card["playable"] = true
-        else
-          card["playable"] = false
-        end
+      else
+        card["playable"] = false
       end
     end
     
@@ -43,7 +33,6 @@ class PlayerController < ApplicationController
     # make computer to choose card to beat with
     computer = Cardholder.computer.first
     computer_cards = computer.cards.where("game_logs.game_id = #{game.id}").order("game_logs.position ASC")
-    # attacker_card_to_beat = table.cards.where("game_logs.game_id = #{game.id}").where("game_logs.played_by = #{game.attacker}").where("game_logs.beated_with is null").first
     attacker_card_to_beat = card
     trump = Card.find(game.trump)
     card_to_beat_with = choose_card_to_beat_with(attacker_card_to_beat, computer_cards, trump)
@@ -51,6 +40,14 @@ class PlayerController < ApplicationController
       c_game_log = computer.game_logs.where(:game_id => game.id, :card_id => card_to_beat_with.id).first
       c_game_log.update_attributes(:cardholder_id => table.id, :played_by => computer.id, :position => max_position)
       game_log.update_attribute("beated_with", card_to_beat_with.id)
+      # mark computer with defender_state = "won" in case player has no playable cards
+      player_cards = player.cards.where("game_logs.game_id = #{game.id}").order("game_logs.position ASC")
+      playable_card_ids = get_playable_cards(game, player_cards)
+      if playable_card_ids == []
+        game.update_attribute("defender_state", "won")
+      end
+    else
+      game.update_attribute("defender_state", "defeated")
     end
     
     respond_with []
@@ -86,6 +83,23 @@ class PlayerController < ApplicationController
   end
   
   private
+  
+  def get_playable_cards(game, cards)
+    table = Cardholder.table.first
+    table_cards = table.cards.where("game_logs.game_id = #{game.id}")
+    if table_cards == []
+      return cards
+    else
+      table_ranks = table_cards.collect{|card| card.rank}
+      playable_cards = []
+      cards.each do |card|
+        if table_ranks.include? card.rank
+          playable_cards << card
+        end
+      end
+      return playable_cards
+    end
+  end  
   
   def choose_card_to_beat_with(attacker_card_to_beat, computer_cards, trump)
     card_to_beat_with = nil
