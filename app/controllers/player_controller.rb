@@ -5,7 +5,7 @@ class PlayerController < ApplicationController
   def index
     game = Game.for_session(session[:game_session]).first
     player = Cardholder.player.first
-    @player_cards = player.cards.where("game_logs.game_id = #{game.id}").order("game_logs.position ASC")
+    @player_cards = player.cards.select("cards.*, game_logs.position").where("game_logs.game_id = #{game.id}").order("game_logs.position ASC")
     playable_card_ids = get_playable_cards(game, @player_cards).collect{|card| card.id}
     @player_cards.each do |card|
       if playable_card_ids.include? card.id
@@ -26,8 +26,9 @@ class PlayerController < ApplicationController
     player = Cardholder.player.first
     game_log = player.game_logs.where(:game_id => game.id, :card_id => card.id).first
     table = Cardholder.table.first
-    positions = table.game_logs.select("position").where(:game_id => game.id, :played_by => game.attacker)
-    max_position = positions.to_a.max ? positions.to_a.max.position + 1 : 1
+    positions = table.game_logs.where(:game_id => game.id, :played_by => game.attacker)
+    positions.collect! {|log| log.position}
+    max_position = positions.max ? positions.max + 1 : 1
     game_log.update_attributes(:cardholder_id => table.id, :played_by => player.id, :position => max_position)
     
     # make computer to choose card to beat with

@@ -9,7 +9,7 @@ class RailsBackboneDurak.Views.Game.IndexView extends Backbone.View
   addAll: () =>
     buttons_view = new RailsBackboneDurak.Views.Buttons.Index(eventer: @options.eventer, buttons: @options.buttons)
     trump_view = new RailsBackboneDurak.Views.TrumpCards.Index(eventer: @options.eventer, trumpCards: @options.trump_cards)
-    deck_view = new RailsBackboneDurak.Views.DeckCards.View(deckCards: @options.deck_cards)
+    deck_view = new RailsBackboneDurak.Views.DeckCards.View(eventer: @options.eventer, deckCards: @options.deck_cards)
     player_view = new RailsBackboneDurak.Views.PlayerCards.View(eventer: @options.eventer, playerCards: @options.player_cards)
     computer_view = new RailsBackboneDurak.Views.ComputerCards.View(eventer: @options.eventer, computerCards: @options.computer_cards)
     pile_view = new RailsBackboneDurak.Views.PileCards.View(eventer: @options.eventer, pileCards: @options.pile_cards)

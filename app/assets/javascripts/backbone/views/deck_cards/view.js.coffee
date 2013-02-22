@@ -4,6 +4,7 @@ class RailsBackboneDurak.Views.DeckCards.View extends Backbone.View
   template: JST["backbone/templates/deck_cards/view"]
 
   initialize: () ->
+    @options.eventer.bind("update_deck", @update_deck)
     @options.deckCards.bind('reset', @render)
 
   addAll: () =>
@@ -17,3 +18,6 @@ class RailsBackboneDurak.Views.DeckCards.View extends Backbone.View
     $(@el).html(@template(deckCards: @options.deckCards.toJSON() ))
     @addAll()
     return this
+  
+  update_deck: =>
+    @options.deckCards.fetch()

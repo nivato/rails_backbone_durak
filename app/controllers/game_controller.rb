@@ -16,36 +16,14 @@ class GameController < ApplicationController
       game_session = Digest::SHA2.hexdigest("#{Time.now}")
       session[:game_session] = game_session
       game = Game.create(:game_session => game_session)
-      deck = Cardholder.deck.first
-      Card.all.each do |card|
-        GameLog.create(:game_id => game.id, :cardholder_id => deck.id, :card_id => card.id)
-      end
-      shuffle_deck(game)
-      trump = deck.cards.where("game_logs.game_id = #{game.id}").order("game_logs.position ASC").last
+      Deck.initiate(game)
+      Deck.shuffle(game)
+      trump = Deck.get_trump(game)
       game.update_attribute("trump", trump.id)
-      serve_cards(6, game.id, Cardholder.player.first.id)
-      serve_cards(6, game.id, Cardholder.computer.first.id)
+      Deck.serve_cards(game)
       game.update_attribute("attacker", Cardholder.player.first.id)
       game.update_attribute("defender", Cardholder.computer.first.id)
       game.update_attribute("defender_state", "continues")
-    end
-  end
-  
-  def serve_cards(number_of_cards, game_id, holder_id)
-    deck = Cardholder.deck.first
-    deck_logs = GameLog.logs_for(game_id, deck.id).limit(number_of_cards)
-    number_of_cards.times do |i|
-      deck_logs[i].update_attributes(:cardholder_id => holder_id, :position => i)
-    end
-  end
-  
-  def shuffle_deck(game)
-    positions = 1.upto(36).to_a
-    positions.shuffle!
-    deck = Cardholder.deck.first
-    logs = GameLog.logs_for(game.id, deck.id)
-    36.times do |i|
-      logs[i].update_attribute("position", positions[i])
     end
   end
   

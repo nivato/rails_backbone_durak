@@ -5,7 +5,7 @@ class ComputerController < ApplicationController
   def index
     game = Game.for_session(session[:game_session]).first
     computer = Cardholder.computer.first
-    @computer_cards = computer.cards.where("game_logs.game_id = #{game.id}").order("game_logs.position ASC")
+    @computer_cards = computer.cards.select("cards.*, game_logs.position").where("game_logs.game_id = #{game.id}").order("game_logs.position ASC")
     respond_with @computer_cards, :only => [:rank, :suit, :position]
   end
 
