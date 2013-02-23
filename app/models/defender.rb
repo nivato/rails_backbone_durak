@@ -10,6 +10,11 @@ class Defender
     return defender.game_logs.where(:game_id => game.id)
   end
   
+  def self.get_cards_max_position(game)
+    positions = get_logs(game).collect! {|log| log.position}
+    return positions.max ? positions.max : 1
+  end
+  
   def self.take_cards_from_table(game)
     positions = get_logs(game).collect! {|log| log.position}
     max_position = positions.max ? positions.max : 1

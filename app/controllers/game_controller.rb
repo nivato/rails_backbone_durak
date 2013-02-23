@@ -4,8 +4,7 @@ class GameController < ApplicationController
   
   def index
     game = Game.for_session(session[:game_session]).first
-    @trump = Card.find(game.trump)
-    respond_with @trump
+    respond_with Deck.get_trump(game)
   end
   
   private

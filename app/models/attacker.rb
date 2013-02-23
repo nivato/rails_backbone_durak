@@ -10,4 +10,9 @@ class Attacker
     return table.game_logs.where(:game_id => game.id, :played_by => game.attacker)
   end
   
+  def self.get_cards_max_position(game)
+    positions = get_logs(game).collect! {|log| log.position}
+    return positions.max ? positions.max : 1
+  end
+  
 end

@@ -12,23 +12,17 @@ class PlayerController < ApplicationController
   def destroy
     card = Card.find(params[:id])
     game = Game.for_session(session[:game_session]).first
-    player = Cardholder.player.first
-    game_log = player.game_logs.where(:game_id => game.id, :card_id => card.id).first
-    table = Cardholder.table.first
-    positions = Attacker.get_logs(game).collect! {|log| log.position}
-    max_position = positions.max ? positions.max + 1 : 1
-    game_log.update_attributes(:cardholder_id => table.id, :played_by => player.id, :position => max_position)
+    Player.play_card(game, card)
     
+    table = Cardholder.table.first
     # make computer to choose card to beat with
     computer = Cardholder.computer.first
     computer_cards = computer.cards.where("game_logs.game_id = #{game.id}").order("game_logs.position ASC")
     attacker_card_to_beat = card
-    trump = Card.find(game.trump)
-    card_to_beat_with = choose_card_to_beat_with(attacker_card_to_beat, computer_cards, trump)
+    card_to_beat_with = choose_card_to_beat_with(attacker_card_to_beat, computer_cards, Deck.get_trump(game))
     if card_to_beat_with != nil
       c_game_log = computer.game_logs.where(:game_id => game.id, :card_id => card_to_beat_with.id).first
-      c_game_log.update_attributes(:cardholder_id => table.id, :played_by => computer.id, :position => max_position)
-      game_log.update_attribute("beated_with", card_to_beat_with.id)
+      c_game_log.update_attributes(:cardholder_id => table.id, :played_by => computer.id, :position => Defender.get_cards_max_position(game) + 1)
       # mark computer with defender_state = "won" in case player has no playable cards
       if Player.get_playable_cards(game) == []
         game.update_attribute("defender_state", "won")
