@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130223101613) do
+ActiveRecord::Schema.define(:version => 20130223113218) do
 
   create_table "cardholders", :force => true do |t|
     t.string   "ch_type"
@@ -50,5 +50,7 @@ ActiveRecord::Schema.define(:version => 20130223101613) do
     t.integer  "defender"
     t.integer  "trump"
   end
+
+  add_index "games", ["game_session"], :name => "index_games_on_game_session"
 
 end
