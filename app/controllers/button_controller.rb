@@ -15,6 +15,9 @@ class ButtonController < ApplicationController
       Table.throw_out_cards_to_pile(game)
       Game.switch_players(game)
       Deck.serve_cards(game)
+      if game.computers_turn?
+        Computer.play_card(game)
+      end
     else
       Defender.take_cards_from_table(game)
       Deck.serve_cards(game)

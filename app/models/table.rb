@@ -13,7 +13,7 @@ class Table
   def self.throw_out_cards_to_pile(game)
     pile = Cardholder.pile.first
     get_logs(game).each do |log|
-        log.update_attributes(:cardholder_id => pile.id, :played_by => nil, :beated_with => nil, :position => 0)
+        log.update_attributes(:cardholder_id => pile.id, :played_by => nil, :position => 0)
       end
   end
   

@@ -12,4 +12,12 @@ class Game < ActiveRecord::Base
     game.update_attributes(:attacker => defender_id, :defender => attacker_id, :defender_state => "continues")
   end
   
+  def computers_turn?
+    return self.attacker == Cardholder.computer.first.id
+  end
+  
+  def players_turn?
+    return self.attacker == Cardholder.player.first.id
+  end
+  
 end
