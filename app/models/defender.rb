@@ -19,7 +19,7 @@ class Defender
     positions = get_logs(game).collect! {|log| log.position}
     max_position = positions.max ? positions.max : 1
     Table.get_logs(game).each do |log|
-      log.update_attributes(:cardholder_id => game.defender, :played_by => nil, :beated_with => nil, :position => max_position += 1)
+      log.update_attributes(:cardholder_id => game.defender, :played_by => nil, :position => max_position += 1)
     end
     game.update_attributes(:defender_state => "continues")
   end

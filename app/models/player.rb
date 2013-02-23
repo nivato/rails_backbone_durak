@@ -1,4 +1,4 @@
-class Player
+class Player < Rules
   
   def self.get_cards(game)
     player = Cardholder.player.first
@@ -10,6 +10,14 @@ class Player
     game_log = player.game_logs.where(:game_id => game.id, :card_id => card.id).first
     table = Cardholder.table.first
     position = Attacker.get_cards_max_position(game) + 1
+    game_log.update_attributes(:cardholder_id => table.id, :played_by => player.id, :position => position)
+  end
+  
+  def self.beat_with(game, card)
+    player = Cardholder.player.first
+    game_log = player.game_logs.where(:game_id => game.id, :card_id => card.id).first
+    table = Cardholder.table.first
+    position = Defender.get_cards_max_position(game) + 1
     game_log.update_attributes(:cardholder_id => table.id, :played_by => player.id, :position => position)
   end
   
@@ -28,19 +36,33 @@ class Player
   
   def self.get_playable_cards(game)
     player_cards = get_cards(game)
-    table = Cardholder.table.first
-    table_cards = table.cards.where("game_logs.game_id = #{game.id}")
-    if table_cards == []
-      return player_cards
-    else
-      table_ranks = table_cards.collect{|card| card.rank}
-      playable_cards = []
-      player_cards.each do |card|
-        if table_ranks.include? card.rank
-          playable_cards << card
+    if game.players_turn?
+      table = Cardholder.table.first
+      table_cards = table.cards.where("game_logs.game_id = #{game.id}")
+      if table_cards == []
+        return player_cards
+      else
+        playable_cards = []
+        table_ranks = table_cards.collect{|card| card.rank}
+        player_cards.each do |card|
+          if table_ranks.include? card.rank
+            playable_cards << card
+          end
         end
+        return playable_cards
       end
-      return playable_cards
+    else
+      if (game.defender_state == "continues")
+        attackers_card = Attacker.get_cards(game).last
+        trump = Deck.get_trump(game)
+        if attackers_card.suit_char != trump.suit_char
+          return get_higher_cards_of_same_suit(attackers_card, player_cards) + get_cards_of_trump_suit(player_cards, trump)
+        else
+          return get_higher_cards_of_same_suit(attackers_card, player_cards)
+        end
+      else
+        return []
+      end
     end
   end  
   

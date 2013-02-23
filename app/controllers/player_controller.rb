@@ -12,8 +12,13 @@ class PlayerController < ApplicationController
   def destroy
     card = Card.find(params[:id])
     game = Game.for_session(session[:game_session]).first
-    Player.play_card(game, card)
-    Computer.beat_card(game, card)
+    if game.players_turn?
+      Player.play_card(game, card)
+      Computer.beat_card(game, card)
+    else
+      Player.beat_with(game, card)
+      Computer.play_card(game)
+    end  
     respond_with []
   end
 

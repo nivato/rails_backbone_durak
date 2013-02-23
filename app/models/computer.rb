@@ -1,4 +1,4 @@
-class Computer
+class Computer < Rules
   
   def self.get_cards(game)
     computer = Cardholder.computer.first
@@ -31,7 +31,7 @@ class Computer
       table = Cardholder.table.first
       game_log.update_attributes(:cardholder_id => table.id, :played_by => computer.id, :position => Attacker.get_cards_max_position(game) + 1)
     else
-      # COMPUTER WINS THE GAME!
+      game.update_attribute("defender_state", "won")
     end
   end
   
@@ -79,46 +79,34 @@ class Computer
     return defenders_card
   end
     
-  def self.choose_higher_card_of_same_suit(attackers_card, computer_cards)
+  def self.choose_higher_card_of_same_suit(player_card, computer_cards)
     defenders_card = nil
-    cards_of_same_suit = computer_cards.collect do |card|
-      card if card.suit_char == attackers_card.suit_char
-    end
-    cards_of_same_suit.compact!
-    unless cards_of_same_suit == []
-      cards_of_higher_rank = cards_of_same_suit.collect do |card|
-        card if card.rank_number > attackers_card.rank_number
-      end
-      cards_of_higher_rank.compact!
-      unless cards_of_higher_rank == []
-        ranks = cards_of_higher_rank.collect do |card|
-          card.rank_number
-        end
-        min_rank = ranks.to_a.min
-        cards_of_higher_rank.each do |card|
-          defenders_card = card if card.rank_number == min_rank
-        end
-      end
+    cards_of_higher_rank = get_higher_cards_of_same_suit(player_card, computer_cards)
+    unless cards_of_higher_rank == []
+      defenders_card = choose_lowest_card(cards_of_higher_rank)
     end
     return defenders_card
   end
   
   def self.choose_lowest_trump_card(computer_cards, trump)
     lowest_trump_card = nil
-    cards_of_trump_suit = computer_cards.collect do |card|
-      card if card.suit_char == trump.suit_char
-    end
-    cards_of_trump_suit.compact!
+    cards_of_trump_suit = get_cards_of_trump_suit(computer_cards, trump)
     unless cards_of_trump_suit == []
-      ranks = cards_of_trump_suit.collect do |card|
-        card.rank_number
-      end
-      min_rank = ranks.to_a.min
-      cards_of_trump_suit.each do |card|
-        lowest_trump_card = card if card.rank_number == min_rank
-      end
+      lowest_trump_card = choose_lowest_card(cards_of_trump_suit)
     end
     return lowest_trump_card
+  end
+  
+  def self.choose_lowest_card(cards)
+    lowest_card = nil
+    ranks = cards.collect do |card|
+      card.rank_number
+    end
+    min_rank = ranks.to_a.min
+    cards.each do |card|
+      lowest_card = card if card.rank_number == min_rank
+    end
+    return lowest_card
   end
   
 end
