@@ -56,7 +56,7 @@ class Computer < Rules
         attackers_card = choose_lowest_trump_card(computer_cards, trump)
       end
     else
-      # select card of same rank on table
+      attackers_card = get_cards_of_same_ranks(cards_on_table, computer_cards).first
     end
     return attackers_card
   end

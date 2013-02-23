@@ -22,4 +22,15 @@ class Rules
     return cards_of_trump_suit.compact!
   end
   
+  def self.get_cards_of_same_ranks(cards_on_table, own_cards)
+    cards_of_same_rank = []
+    table_ranks = cards_on_table.collect{|card| card.rank}
+    own_cards.each do |card|
+      if table_ranks.include? card.rank
+        cards_of_same_rank << card
+      end
+    end
+    return cards_of_same_rank
+  end
+  
 end

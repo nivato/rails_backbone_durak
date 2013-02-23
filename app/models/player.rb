@@ -42,14 +42,7 @@ class Player < Rules
       if table_cards == []
         return player_cards
       else
-        playable_cards = []
-        table_ranks = table_cards.collect{|card| card.rank}
-        player_cards.each do |card|
-          if table_ranks.include? card.rank
-            playable_cards << card
-          end
-        end
-        return playable_cards
+        return get_cards_of_same_ranks(table_cards, player_cards)
       end
     else
       if (game.defender_state == "continues")
