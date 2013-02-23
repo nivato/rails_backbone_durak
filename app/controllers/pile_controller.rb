@@ -4,9 +4,7 @@ class PileController < ApplicationController
   # GET /computer.json
   def index
     game = Game.for_session(session[:game_session]).first
-    pile = Cardholder.pile.first
-    @pile_cards = pile.cards.select("cards.*, game_logs.position").where("game_logs.game_id = #{game.id}").order("game_logs.position ASC")
-    respond_with @pile_cards, :only => [:rank, :suit, :position]
+    respond_with Pile.get_cards(game), :only => [:rank, :suit, :position]
   end
 
   # GET /decks/1

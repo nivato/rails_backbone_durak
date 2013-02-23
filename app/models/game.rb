@@ -5,4 +5,11 @@ class Game < ActiveRecord::Base
   has_many :cards, :through => :game_logs
   
   scope :for_session, lambda{|game_session| where(:game_session => game_session)}
+  
+  def self.switch_players(game)
+    attacker_id = game.attacker
+    defender_id = game.defender
+    game.update_attributes(:attacker => defender_id, :defender => attacker_id, :defender_state => "continues")
+  end
+  
 end

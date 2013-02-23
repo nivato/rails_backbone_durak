@@ -24,7 +24,7 @@ class Deck
   
   def self.get_cards(game)
     deck = Cardholder.deck.first
-    return @cards_in_deck = deck.cards.select("cards.*, game_logs.position").where("game_logs.game_id = #{game.id}").order("game_logs.position ASC")
+    return deck.cards.select("cards.*, game_logs.position").where("game_logs.game_id = #{game.id}").order("game_logs.position ASC")
   end
   
   def self.serve_cards(game)

@@ -4,9 +4,7 @@ class DefenderController < ApplicationController
   # GET /defender.json
   def index
     game = Game.for_session(session[:game_session]).first
-    table = Cardholder.table.first
-    @defender_cards = table.cards.select("cards.*, game_logs.position").where("game_logs.game_id = #{game.id}").where("game_logs.played_by = #{game.defender}").order("game_logs.position ASC")
-    respond_with @defender_cards, :only => [:rank, :suit, :position]
+    respond_with Defender.get_cards(game), :only => [:rank, :suit, :position]
   end
 
   # GET /decks/1
