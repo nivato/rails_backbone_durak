@@ -4,6 +4,7 @@ class RailsBackboneDurak.Views.TrumpCards.Index extends Backbone.View
   template: JST["backbone/templates/trump_cards/index"]
 
   initialize: () ->
+    @options.eventer.bind("update_trump", @update_trump)
     @options.trumpCards.bind('reset', @render)
 
   addAll: () =>
@@ -17,3 +18,6 @@ class RailsBackboneDurak.Views.TrumpCards.Index extends Backbone.View
     $(@el).html(@template(trumpCards: @options.trumpCards.toJSON() ))
     @addAll()
     return this
+    
+  update_trump: =>
+    @options.trumpCards.fetch()

@@ -8,7 +8,7 @@ class RailsBackboneDurak.Views.Buttons.Button extends Backbone.View
   events:
     "click #next"           : "end_of_turn"
     "click #take_cards"     : "end_of_turn"
-    "click #new_game"       : "end_of_turn"
+    "click #new_game"       : "end_of_game"
 
   render: ->
     $(@el).html(@template(@model.toJSON() ))
@@ -18,7 +18,17 @@ class RailsBackboneDurak.Views.Buttons.Button extends Backbone.View
     @model.destroy({success: @end_of_turn_callback})
     this.remove()
     return false
+    
+  end_of_game: =>
+    @model.destroy({success: @end_of_game_callback})
+    this.remove()
+    return false
   
   end_of_turn_callback: =>
     @options.eventer.trigger("update_table")
     @options.eventer.trigger("update_deck")
+    
+  end_of_game_callback: =>
+    @options.eventer.trigger("update_table")
+    @options.eventer.trigger("update_deck")
+    @options.eventer.trigger("update_trump")
