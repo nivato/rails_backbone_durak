@@ -10,17 +10,22 @@ class ButtonController < ApplicationController
   # DELETE /buttons/1
   # DELETE /buttons/1.json
   def destroy
-    
-    # TODO case when player click take_cards havin playable cards
-    
     game = Game.for_session(session[:game_session]).first
     if game.finished
       session[:game_session] = Game.set_up_game
       game = Game.for_session(session[:game_session]).first
     else
       if (game.defender_state == "won") || (game.defender_state == "continues")
-        Table.throw_out_cards_to_pile(game)
-        Game.switch_players(game)
+        if Attacker.get_cards(game).size > Defender.get_cards(game).size
+          if game.players_turn?
+            Computer.take_cards_from_table(game)
+          else
+            Player.take_cards_from_table(game)
+          end
+        else
+          Table.throw_out_cards_to_pile(game)
+          Game.switch_players(game)
+        end
       else
         if game.players_turn?
           Computer.take_cards_from_table(game)
