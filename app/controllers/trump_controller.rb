@@ -4,7 +4,7 @@ class TrumpController < ApplicationController
   # GET /attacker.json
   def index
     game = Game.for_session(session[:game_session]).first
-    respond_with Deck.get_trump(game)
+    respond_with game.get_trump
   end
 
   # GET /decks/1

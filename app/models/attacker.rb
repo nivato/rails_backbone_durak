@@ -12,7 +12,7 @@ class Attacker
   
   def self.get_cards_max_position(game)
     positions = get_logs(game).collect! {|log| log.position}
-    return positions.max ? positions.max : 1
+    return positions.max ? positions.max : 0
   end
   
 end

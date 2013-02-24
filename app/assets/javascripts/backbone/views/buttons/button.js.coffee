@@ -6,13 +6,15 @@ class RailsBackboneDurak.Views.Buttons.Button extends Backbone.View
   tagName: "tr"
   
   events:
-    "click #next"       : "next_action"
+    "click #next"           : "end_of_turn"
+    "click #take_cards"     : "end_of_turn"
+    "click #new_game"       : "end_of_turn"
 
   render: ->
     $(@el).html(@template(@model.toJSON() ))
     return this
   
-  next_action: =>
+  end_of_turn: =>
     @model.destroy({success: @end_of_turn_callback})
     this.remove()
     return false

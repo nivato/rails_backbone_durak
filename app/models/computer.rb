@@ -7,7 +7,7 @@ class Computer < Rules
   
   def self.beat_card(game, attackers_card)
     computer_cards = get_cards(game)
-    defenders_card = choose_defending_card(attackers_card, computer_cards, Deck.get_trump(game))
+    defenders_card = choose_defending_card(attackers_card, computer_cards, game.get_trump)
     if defenders_card != nil
       computer = Cardholder.computer.first
       game_log = computer.game_logs.where(:game_id => game.id, :card_id => defenders_card.id).first
@@ -24,12 +24,15 @@ class Computer < Rules
   def self.play_card(game)
     computer_cards = get_cards(game)
     cards_on_table = Table.get_cards(game)
-    attackers_card = choose_attacking_card(cards_on_table, computer_cards, Deck.get_trump(game))
+    attackers_card = choose_attacking_card(cards_on_table, computer_cards, game.get_trump)
     if attackers_card != nil
       computer = Cardholder.computer.first
       game_log = computer.game_logs.where(:game_id => game.id, :card_id => attackers_card.id).first
       table = Cardholder.table.first
       game_log.update_attributes(:cardholder_id => table.id, :played_by => computer.id, :position => Attacker.get_cards_max_position(game) + 1)
+      if Player.get_playable_cards(game) == []
+        game.update_attribute("defender_state", "defeated")
+      end
     else
       game.update_attribute("defender_state", "won")
     end

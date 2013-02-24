@@ -47,7 +47,7 @@ class Player < Rules
     else
       if (game.defender_state == "continues")
         attackers_card = Attacker.get_cards(game).last
-        trump = Deck.get_trump(game)
+        trump = game.get_trump
         if attackers_card.suit_char != trump.suit_char
           return get_higher_cards_of_same_suit(attackers_card, player_cards) + get_cards_of_trump_suit(player_cards, trump)
         else

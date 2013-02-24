@@ -17,7 +17,7 @@ class Deck
     end
   end
   
-  def self.get_trump(game)
+  def self.define_trump(game)
     deck = Cardholder.deck.first
     return deck.cards.where("game_logs.game_id = #{game.id}").order("game_logs.position ASC").last
   end
@@ -32,8 +32,13 @@ class Deck
     computer = Cardholder.computer.first
     cards_player_needs = get_number_of_cards_needed_by(game, player)
     cards_computer_needs = get_number_of_cards_needed_by(game, computer)
-    serve_cards_for(game, player, cards_player_needs)
-    serve_cards_for(game, computer, cards_computer_needs)
+    if game.players_turn?
+      serve_cards_for(game, computer, cards_computer_needs)
+      serve_cards_for(game, player, cards_player_needs)
+    else
+      serve_cards_for(game, player, cards_player_needs)
+      serve_cards_for(game, computer, cards_computer_needs)
+    end
   end
   
   private
@@ -50,9 +55,11 @@ class Deck
       deck_logs = GameLog.logs_for(game.id, deck.id).limit(number_of_cards)
       positions = card_holder.game_logs.where(:game_id => game.id)
       positions.collect! {|log| log.position}
-      max_position = positions.max ? positions.max + 1 : 1
+      max_position = positions.max ? positions.max : 0
       number_of_cards.times do |i|
-        deck_logs[i].update_attributes(:cardholder_id => card_holder.id, :position => max_position + i)
+        if get_cards(game) != []
+          deck_logs[i].update_attributes(:cardholder_id => card_holder.id, :position => max_position + i)
+        end
       end
     end
   end

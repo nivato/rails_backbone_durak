@@ -12,12 +12,80 @@ class Game < ActiveRecord::Base
     game.update_attributes(:attacker => defender_id, :defender => attacker_id, :defender_state => "continues")
   end
   
+  def self.set_up_game
+    pupulate_db
+    game_session = Digest::SHA2.hexdigest("#{Time.now}")
+    game = Game.create(:game_session => game_session)
+    Deck.initiate(game)
+    Deck.shuffle(game)
+    game.update_attribute("trump", Deck.define_trump(game).id)
+    Deck.serve_cards(game)
+    game.update_attribute("attacker", Cardholder.player.first.id)
+    game.update_attribute("defender", Cardholder.computer.first.id)
+    game.update_attribute("defender_state", "continues")
+    return game_session
+  end
+  
   def computers_turn?
     return self.attacker == Cardholder.computer.first.id
   end
   
   def players_turn?
     return self.attacker == Cardholder.player.first.id
+  end
+  
+  def get_trump
+    return Card.find(self.trump)
+  end
+  
+  private
+  
+  def self.pupulate_db
+    if Card.all == []
+      pupulate_db_with_cards
+    end
+    if Cardholder.all == []
+      populate_db_with_cardholders
+    end
+  end
+  
+  def self.pupulate_db_with_cards
+    ranks = {
+      6 => "6", 
+      7 => "7", 
+      8 => "8", 
+      9 => "9", 
+      10 => "10", 
+      11 => "J", 
+      12 => "Q", 
+      13 => "K", 
+      14 => "A"
+    }
+    suits = {
+      "s" => "\u2660", #spades
+      "h" => "\u2665", #hearts
+      "d" => "\u2666", #diamonds
+      "c" => "\u2663", #clubs
+    }
+    ranks.each do |rank_number, rank|
+      suits.each do |suit_char, suit|
+        card = Card.new
+        card.rank = rank
+        card.rank_number = rank_number
+        card.suit = suit
+        card.suit_char = suit_char
+        card.save
+      end
+    end
+  end
+  
+  def self.populate_db_with_cardholders
+    ch_types = ["Player", "Computer", "Deck", "Table", "Pile"]
+    ch_types.each do |ch_type|
+      cardholder = Cardholder.new
+      cardholder.ch_type = ch_type
+      cardholder.save
+    end
   end
   
 end

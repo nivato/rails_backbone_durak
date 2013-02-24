@@ -12,6 +12,14 @@ class Button
     else
       buttons["take_cards"] = false
     end
+    if ((Computer.get_cards(game) == []) || (Player.get_cards(game) == [])) && Deck.get_cards(game) == []
+      buttons["new_game"] = true
+      buttons["next"] = false
+      buttons["take_cards"] = false
+      game.update_attribute("finished", true)
+    else
+      buttons["new_game"] = false
+    end
     buttons["id"] = 1
     return buttons
   end
