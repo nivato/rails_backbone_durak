@@ -91,25 +91,4 @@ class Computer < Rules
     return defenders_card
   end
   
-  def self.choose_lowest_trump_card(computer_cards, trump)
-    lowest_trump_card = nil
-    cards_of_trump_suit = get_cards_of_trump_suit(computer_cards, trump)
-    unless cards_of_trump_suit == []
-      lowest_trump_card = choose_lowest_card(cards_of_trump_suit)
-    end
-    return lowest_trump_card
-  end
-  
-  def self.choose_lowest_card(cards)
-    lowest_card = nil
-    ranks = cards.collect do |card|
-      card.rank_number
-    end
-    min_rank = ranks.to_a.min
-    cards.each do |card|
-      lowest_card = card if card.rank_number == min_rank
-    end
-    return lowest_card
-  end
-  
 end
