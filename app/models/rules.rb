@@ -4,6 +4,10 @@ class Rules
     # overriden in Player and Computer
   end
   
+  def self.has_cards?(game)
+    return get_cards(game).size > 0
+  end
+  
   def self.take_cards_from_table(game)
     positions = get_cards(game).collect! {|card| card.position}
     max_position = positions.max ? positions.max : 0

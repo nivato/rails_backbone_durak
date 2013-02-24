@@ -35,27 +35,35 @@ class Player < Rules
   end
   
   def self.get_playable_cards(game)
-    player_cards = get_cards(game)
-    if game.players_turn?
-      table = Cardholder.table.first
-      table_cards = table.cards.where("game_logs.game_id = #{game.id}")
-      if table_cards == []
-        return player_cards
-      else
-        return get_cards_of_same_ranks(table_cards, player_cards)
-      end
-    else
-      if (game.defender_state == "continues")
-        attackers_card = Attacker.get_cards(game).last
-        trump = game.get_trump
-        if attackers_card.suit_char != trump.suit_char
-          return get_higher_cards_of_same_suit(attackers_card, player_cards) + get_cards_of_trump_suit(player_cards, trump)
+    if !game.finished
+      player_cards = get_cards(game)
+      if game.players_turn?
+        if Computer.has_cards?(game) && !(Attacker.get_cards(game).size >= 6)
+          table = Cardholder.table.first
+          table_cards = table.cards.where("game_logs.game_id = #{game.id}")
+          if table_cards == []
+            return player_cards
+          else
+            return get_cards_of_same_ranks(table_cards, player_cards)
+          end
         else
-          return get_higher_cards_of_same_suit(attackers_card, player_cards)
+          return []
         end
       else
-        return []
+        if (game.defender_state == "continues")
+          attackers_card = Attacker.get_cards(game).last
+          trump = game.get_trump
+          if attackers_card.suit_char != trump.suit_char
+            return get_higher_cards_of_same_suit(attackers_card, player_cards) + get_cards_of_trump_suit(player_cards, trump)
+          else
+            return get_higher_cards_of_same_suit(attackers_card, player_cards)
+          end
+        else
+          return []
+        end
       end
+    else
+      return []
     end
   end  
   

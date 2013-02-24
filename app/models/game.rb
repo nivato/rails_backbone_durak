@@ -28,6 +28,12 @@ class Game < ActiveRecord::Base
     return game_session
   end
   
+  def self.check_whether_game_is_finished(game)
+    if ((Computer.get_cards(game) == []) || (Player.get_cards(game) == [])) && Deck.get_cards(game) == []
+      game.update_attribute("finished", true)
+    end
+  end
+  
   def computers_turn?
     return self.attacker == Cardholder.computer.first.id
   end

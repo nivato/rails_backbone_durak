@@ -19,13 +19,14 @@ class Computer < Rules
     else
       game.update_attribute("defender_state", "defeated")
     end
+    Game.check_whether_game_is_finished(game)
   end
   
   def self.play_card(game)
     computer_cards = get_cards(game)
     cards_on_table = Table.get_cards(game)
     attackers_card = choose_attacking_card(cards_on_table, computer_cards, game.get_trump)
-    if attackers_card != nil
+    if (attackers_card != nil) && Player.has_cards?(game) && !(Attacker.get_cards(game).size >= 6)
       computer = Cardholder.computer.first
       game_log = computer.game_logs.where(:game_id => game.id, :card_id => attackers_card.id).first
       table = Cardholder.table.first
@@ -36,6 +37,7 @@ class Computer < Rules
     else
       game.update_attribute("defender_state", "won")
     end
+    Game.check_whether_game_is_finished(game)
   end
   
   private

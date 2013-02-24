@@ -14,10 +14,14 @@ class PlayerController < ApplicationController
     game = Game.for_session(session[:game_session]).first
     if game.players_turn?
       Player.play_card(game, card)
-      Computer.beat_card(game, card)
+      unless game.finished
+        Computer.beat_card(game, card)
+      end
     else
       Player.beat_with(game, card)
-      Computer.play_card(game)
+      unless game.finished
+        Computer.play_card(game)
+      end
     end  
     respond_with []
   end
