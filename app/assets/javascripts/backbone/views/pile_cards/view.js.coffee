@@ -15,6 +15,7 @@ class RailsBackboneDurak.Views.PileCards.View extends Backbone.View
     @$("tbody").append(view.render().el)
 
   render: =>
+    $(@el).attr("id", "pile-cards")
     $(@el).html(@template(pileCards: @options.pileCards.toJSON() ))
     @addAll()
     return this

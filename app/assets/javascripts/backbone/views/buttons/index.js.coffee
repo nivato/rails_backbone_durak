@@ -15,6 +15,7 @@ class RailsBackboneDurak.Views.Buttons.Index extends Backbone.View
     @$("tbody").append(view.render().el)
 
   render: =>
+    $(@el).attr("id", "buttons")
     $(@el).html(@template(buttons: @options.buttons.toJSON() ))
     @addAll()
     return this

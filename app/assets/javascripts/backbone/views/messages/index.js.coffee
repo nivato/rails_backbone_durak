@@ -15,6 +15,7 @@ class RailsBackboneDurak.Views.Messages.Index extends Backbone.View
     @$("tbody").append(view.render().el)
 
   render: =>
+    $(@el).attr("id", "message")
     $(@el).html(@template(messages: @options.messages.toJSON() ))
     @addAll()
     return this

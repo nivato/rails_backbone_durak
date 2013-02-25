@@ -15,6 +15,7 @@ class RailsBackboneDurak.Views.ComputerCards.View extends Backbone.View
     @$("tbody").append(view.render().el)
 
   render: =>
+    $(@el).attr("id", "computer-cards")
     $(@el).html(@template(computerCards: @options.computerCards.toJSON() ))
     @addAll()
     return this

@@ -15,6 +15,7 @@ class RailsBackboneDurak.Views.TrumpCards.Index extends Backbone.View
     @$("tbody").append(view.render().el)
 
   render: =>
+    $(@el).attr("id", "trump-card")
     $(@el).html(@template(trumpCards: @options.trumpCards.toJSON() ))
     @addAll()
     return this

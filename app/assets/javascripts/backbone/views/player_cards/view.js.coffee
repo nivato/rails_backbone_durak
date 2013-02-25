@@ -15,6 +15,7 @@ class RailsBackboneDurak.Views.PlayerCards.View extends Backbone.View
     @$("tbody").append(view.render().el)
 
   render: =>
+    $(@el).attr("id", "player-cards")
     $(@el).html(@template(playerCards: @options.playerCards.toJSON() ))
     @addAll()
     return this

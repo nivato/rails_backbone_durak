@@ -10,6 +10,7 @@ class RailsBackboneDurak.Views.Table.TableView extends Backbone.View
     @$("#defender").append(defender_view.render().el)
 
   render: =>
+    $(@el).attr("id", "table-cards")
     $(@el).html(@template)
     @addAll()
     return this
