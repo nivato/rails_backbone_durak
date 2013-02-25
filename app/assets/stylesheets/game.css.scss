@@ -3,7 +3,7 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 
-//image position x:12 y:8   size x:115 y:162
+//image position x:13 y:8   size x:114 y:161
 //.card-h-10c{display:inline-block;width:56px;height:36px;background:url(/assets/cards/cards-default.png) 0px -10px no-repeat}
 html, body {
   margin: 0; 
@@ -30,6 +30,60 @@ body {
   padding: 0;
 }
 
+.card-Ah, .card-6h, .card-7h, .card-8h, .card-9h, .card-10h, .card-Jh, .card-Qh, .card-Kh,
+.card-As, .card-6s, .card-7s, .card-8s, .card-9s, .card-10s, .card-Js, .card-Qs, .card-Ks,
+.card-Ad, .card-6d, .card-7d, .card-8d, .card-9d, .card-10d, .card-Jd, .card-Qd, .card-Kd,
+.card-Ac, .card-6c, .card-7c, .card-8c, .card-9c, .card-10c, .card-Jc, .card-Qc, .card-Kc,
+.card-back-a, .card-back-i {
+  display: inline-block;
+  float: left;
+  width: 114px;
+  height: 161px;
+}
+
+.card-Ah { background: url('oxygen.png') -13px -8px no-repeat; }
+.card-6h { background: url('oxygen.png') -134px -8px no-repeat; }
+.card-7h { background: url('oxygen.png') -255px -8px no-repeat; }
+.card-8h { background: url('oxygen.png') -376px -8px no-repeat; }
+.card-9h { background: url('oxygen.png') -497px -8px no-repeat; }
+.card-10h { background: url('oxygen.png') -619px -8px no-repeat; }
+.card-Jh { background: url('oxygen.png') -740px -8px no-repeat; }
+.card-Qh { background: url('oxygen.png') -861px -8px no-repeat; }
+.card-Kh { background: url('oxygen.png') -982px -8px no-repeat; }
+
+.card-As { background: url('oxygen.png') -13px -175px no-repeat; }
+.card-6s { background: url('oxygen.png') -134px -175px no-repeat; }
+.card-7s { background: url('oxygen.png') -255px -175px no-repeat; }
+.card-8s { background: url('oxygen.png') -376px -175px no-repeat; }
+.card-9s { background: url('oxygen.png') -497px -175px no-repeat; }
+.card-10s { background: url('oxygen.png') -619px -175px no-repeat; }
+.card-Js { background: url('oxygen.png') -740px -175px no-repeat; }
+.card-Qs { background: url('oxygen.png') -861px -175px no-repeat; }
+.card-Ks { background: url('oxygen.png') -982px -175px no-repeat; }
+
+.card-Ad { background: url('oxygen.png') -13px -344px no-repeat; }
+.card-6d { background: url('oxygen.png') -134px -344px no-repeat; }
+.card-7d { background: url('oxygen.png') -255px -344px no-repeat; }
+.card-8d { background: url('oxygen.png') -376px -344px no-repeat; }
+.card-9d { background: url('oxygen.png') -497px -344px no-repeat; }
+.card-10d { background: url('oxygen.png') -619px -344px no-repeat; }
+.card-Jd { background: url('oxygen.png') -740px -344px no-repeat; }
+.card-Qd { background: url('oxygen.png') -861px -344px no-repeat; }
+.card-Kd { background: url('oxygen.png') -982px -344px no-repeat; }
+
+.card-Ac { background: url('oxygen.png') -13px -511px no-repeat; }
+.card-6c { background: url('oxygen.png') -134px -511px no-repeat; }
+.card-7c { background: url('oxygen.png') -255px -511px no-repeat; }
+.card-8c { background: url('oxygen.png') -376px -511px no-repeat; }
+.card-9c { background: url('oxygen.png') -497px -511px no-repeat; }
+.card-10c { background: url('oxygen.png') -619px -511px no-repeat; }
+.card-Jc { background: url('oxygen.png') -740px -511px no-repeat; }
+.card-Qc { background: url('oxygen.png') -861px -511px no-repeat; }
+.card-Kc { background: url('oxygen.png') -982px -511px no-repeat; }
+
+.card-back-a { background: url('oxygen.png') -13px -679px no-repeat; }
+.card-back-i { background: url('oxygen.png') -134px -679px no-repeat; }
+
 table {
   background-color: #E5E5FF;
   width: 80px;
@@ -42,7 +96,7 @@ td {
   text-align: center;
 }
 
-div#deck-cards, div#player-cards, div#computer-cards, div#buttons, div#pile-cards {
+div#player-cards, div#computer-cards, div#buttons, div#pile-cards {
   float: left;
   display: inline;
   width: 120px;
