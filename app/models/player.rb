@@ -11,6 +11,7 @@ class Player < Rules
     table = Cardholder.table.first
     position = Attacker.get_cards_max_position(game) + 1
     game_log.update_attributes(:cardholder_id => table.id, :played_by => player.id, :position => position)
+    Game.check_whether_game_is_finished(game)
   end
   
   def self.beat_with(game, card)
@@ -19,6 +20,7 @@ class Player < Rules
     table = Cardholder.table.first
     position = Defender.get_cards_max_position(game) + 1
     game_log.update_attributes(:cardholder_id => table.id, :played_by => player.id, :position => position)
+    Game.check_whether_game_is_finished(game)
   end
   
   def self.get_cards_marked_with_playable_flag(game)

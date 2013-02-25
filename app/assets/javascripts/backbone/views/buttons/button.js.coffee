@@ -27,8 +27,10 @@ class RailsBackboneDurak.Views.Buttons.Button extends Backbone.View
   end_of_turn_callback: =>
     @options.eventer.trigger("update_table")
     @options.eventer.trigger("update_deck")
+    @options.eventer.trigger("update_message")
     
   end_of_game_callback: =>
     @options.eventer.trigger("update_table")
     @options.eventer.trigger("update_deck")
     @options.eventer.trigger("update_trump")
+    @options.eventer.trigger("update_message")

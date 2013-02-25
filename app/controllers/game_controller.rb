@@ -5,7 +5,12 @@ class GameController < ApplicationController
   # GET /game.json
   def index
     game = Game.for_session(session[:game_session]).first
-    respond_with game.get_trump
+    message = {}
+    unless game.message == nil
+      message["message"] = game.message
+      message["id"] = 1
+    end
+    respond_with message
   end
   
   # GET /games/1

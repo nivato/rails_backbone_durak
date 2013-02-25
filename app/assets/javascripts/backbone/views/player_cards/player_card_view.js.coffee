@@ -19,3 +19,4 @@ class RailsBackboneDurak.Views.PlayerCards.PlayerCardView extends Backbone.View
   
   update_table_callback: =>
     @options.eventer.trigger("update_table")
+    @options.eventer.trigger("update_message")

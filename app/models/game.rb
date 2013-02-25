@@ -22,6 +22,7 @@ class Game < ActiveRecord::Base
     Deck.serve_cards(game)
     define_attacker(game)
     game.update_attribute("defender_state", "continues")
+    game.update_attribute("message", nil)
     if game.computers_turn?
       Computer.play_card(game)
     end
@@ -30,6 +31,11 @@ class Game < ActiveRecord::Base
   
   def self.check_whether_game_is_finished(game)
     if ((Computer.get_cards(game) == []) || (Player.get_cards(game) == [])) && Deck.get_cards(game) == []
+      if Computer.get_cards(game) == []
+        game.update_attribute("message", "Computer won!")
+      else
+        game.update_attribute("message", "Player won!")
+      end
       game.update_attribute("finished", true)
     end
   end
