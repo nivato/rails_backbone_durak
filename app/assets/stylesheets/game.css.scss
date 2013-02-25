@@ -21,7 +21,7 @@ body {
   height: 99%;
 }
 
-#game {
+#game, #deck-cards {
   display: inline-block;
   height: 100%;
   width: 100%;
@@ -83,6 +83,10 @@ body {
 
 .card-back-a { background: url('oxygen.png') -13px -679px no-repeat; }
 .card-back-i { background: url('oxygen.png') -134px -679px no-repeat; }
+
+.deck {
+  width: 2px;
+}
 
 table {
   background-color: #E5E5FF;

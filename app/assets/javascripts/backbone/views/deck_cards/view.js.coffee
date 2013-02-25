@@ -13,8 +13,10 @@ class RailsBackboneDurak.Views.DeckCards.View extends Backbone.View
     $(@el).append(view.render().el)
 
   render: =>
+    $(@el).html("")
     $(@el).attr("id", "deck-cards")
     @addAll()
+    $(@el).append('<div class="card-back-a"></div>')
     return this
   
   update_deck: =>
