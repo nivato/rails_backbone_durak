@@ -4,7 +4,12 @@ class DeckController < ApplicationController
   # GET /deck.json
   def index
     game = Game.for_session(session[:game_session]).first
-    respond_with Deck.get_cards(game), :only => [:position]
+    deck_cards = {}
+    trump = game.get_trump
+    deck_cards["size"] = Deck.get_cards(game).size
+    deck_cards["trump"] = trump.rank + trump.suit_char
+    deck_cards["id"] = 1
+    respond_with deck_cards
   end
 
   # GET /decks/1

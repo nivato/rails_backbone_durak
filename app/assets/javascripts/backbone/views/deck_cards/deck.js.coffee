@@ -1,6 +1,6 @@
 RailsBackboneDurak.Views.DeckCards ||= {}
 
-class RailsBackboneDurak.Views.DeckCards.View extends Backbone.View
+class RailsBackboneDurak.Views.DeckCards.Deck extends Backbone.View
   initialize: () ->
     @options.eventer.bind("update_deck", @update_deck)
     @options.deckCards.bind('reset', @render)
@@ -8,15 +8,16 @@ class RailsBackboneDurak.Views.DeckCards.View extends Backbone.View
   addAll: () =>
     @options.deckCards.each(@addOne)
 
-  addOne: (deckCard) =>
-    view = new RailsBackboneDurak.Views.DeckCards.DeckCardView({model : deckCard})
-    $(@el).append(view.render().el)
+  addOne: (deck) =>
+    for i in [1..deck.get("size") - 1]
+      $(@el).append("<div class='deck card-back-a'></div>")
+    $(@el).append('<div class="card-back-a"></div>')
+    $(@el).append("<div class='card-#{deck.get("trump")}'></div>")
 
   render: =>
     $(@el).html("")
     $(@el).attr("id", "deck-cards")
     @addAll()
-    $(@el).append('<div class="card-back-a"></div>')
     return this
   
   update_deck: =>
