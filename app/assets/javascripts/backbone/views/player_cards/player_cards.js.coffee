@@ -1,8 +1,6 @@
 RailsBackboneDurak.Views.PlayerCards ||= {}
 
-class RailsBackboneDurak.Views.PlayerCards.View extends Backbone.View
-  template: JST["backbone/templates/player_cards/view"]
-
+class RailsBackboneDurak.Views.PlayerCards.PlayerCards extends Backbone.View
   initialize: () ->
     @options.eventer.bind("update_table", @update_cards)
     @options.playerCards.bind('reset', @render)
@@ -11,12 +9,12 @@ class RailsBackboneDurak.Views.PlayerCards.View extends Backbone.View
     @options.playerCards.each(@addOne)
 
   addOne: (playerCard) =>
-    view = new RailsBackboneDurak.Views.PlayerCards.PlayerCardView({model : playerCard, eventer: @options.eventer})
-    @$("tbody").append(view.render().el)
+    view = new RailsBackboneDurak.Views.PlayerCards.Card({model : playerCard, eventer: @options.eventer})
+    $(@el).append(view.render().el)
 
   render: =>
+    $(@el).html("")
     $(@el).attr("id", "player-cards")
-    $(@el).html(@template(playerCards: @options.playerCards.toJSON() ))
     @addAll()
     return this
     
