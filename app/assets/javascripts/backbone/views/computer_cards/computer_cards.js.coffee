@@ -9,8 +9,9 @@ class RailsBackboneDurak.Views.ComputerCards.ComputerCards extends Backbone.View
     @options.computerCards.each(@addOne)
 
   addOne: (computer_cards) =>
-    for i in [1..computer_cards.get("size")]
-      $(@el).append('<div class="card-back-a"></div>')
+    if computer_cards.get("size") >= 1
+      for i in [1..computer_cards.get("size")]
+        $(@el).append('<div class="card-back-a"></div>')
 
   render: =>
     $(@el).html("")

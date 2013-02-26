@@ -42,7 +42,7 @@ body {
   display: inline-block;
   width: 20%;
   min-width: 280px;
-  height: 400px;
+  height: 340px;
   border: 1px solid red;
   margin: 0 2% 0 2%;
   padding: 0;
@@ -57,11 +57,22 @@ body {
   padding: 0;
 }
 
+#attacker-cards {
+  position: relative;
+  top: 80px;
+}
+
+#defender-cards {
+  position: relative;
+  top: -65px;
+  left: 15px;
+}
+
 #table-cards {
   display: inline-block;
   width: 50%;
   min-width: 690px;
-  height: 400px;
+  height: 340px;
   border: 1px solid red;
   margin: 0 2% 0 0;
   padding: 0;
@@ -70,7 +81,7 @@ body {
 #trump-card {
   display: inline-block;
   min-width: 120px;
-  height: 400px;
+  height: 340px;
   border: 1px solid red;
   margin: 0 auto 0 0;
   padding: 0;
@@ -79,26 +90,30 @@ body {
 #message {
   display: block;
   width: 50%;
-  height: 60px;
+  height: 30px;
   border: 1px solid red;
   margin-left: auto;
   margin-right: auto;
   padding: 0;
+  font-size: 20px;
+  text-align: center;
 }
 
 #buttons {
   display: block;
   width: 50%;
-  height: 60px;
+  height: 50px;
   border: 1px solid red;
   margin-left: auto;
   margin-right: auto;
   padding: 0;
+  text-align: center;
 }
 
 #player-cards {
   display: block;
   width: 50%;
+  min-width: 690px;
   height: 170px;
   border: 1px solid red;
   margin-left: auto;
@@ -168,7 +183,6 @@ body {
   display: table-cell;
   width: 120px;
   height: 40px;
-  margin: auto;
   text-align: center;
   vertical-align: middle;
   color: white;

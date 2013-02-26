@@ -5,7 +5,7 @@ class RailsBackboneDurak.Views.Game.IndexView extends Backbone.View
     super
   
   addAll: () =>
-    messages_view = new RailsBackboneDurak.Views.Messages.Index(eventer: @options.eventer, messages: @options.messages)
+    messages_view = new RailsBackboneDurak.Views.Messages.Message(eventer: @options.eventer, messages: @options.messages)
     buttons_view = new RailsBackboneDurak.Views.Buttons.Buttons(eventer: @options.eventer, buttons: @options.buttons)
     trump_view = new RailsBackboneDurak.Views.TrumpCards.TrumpCard(eventer: @options.eventer, trumpCards: @options.trump_cards)
     deck_view = new RailsBackboneDurak.Views.DeckCards.Deck(eventer: @options.eventer, deckCards: @options.deck_cards)
