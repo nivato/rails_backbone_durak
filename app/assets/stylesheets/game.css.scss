@@ -16,13 +16,17 @@ body {
   width: 99%;
   min-width: 1200px;
   height: 99%;
+  background-color: #333333;
+}
+
+#game, #computer-cards, #deck-cards, #attacker-cards, #defender-cards, #table-cards, #message, #buttons, #player-cards {
+  //border: 1px solid red;
 }
 
 #game {
   display: inline-block;
   height: 100%;
   width: 100%;
-  border: 1px solid red;
   margin: 0;
   padding: 0;
 }
@@ -32,7 +36,6 @@ body {
   width: 50%;
   min-width: 690px;
   height: 170px;
-  border: 1px solid red;
   margin-left: auto;
   margin-right: auto;
   padding: 0;
@@ -42,8 +45,7 @@ body {
   display: inline-block;
   width: 20%;
   min-width: 280px;
-  height: 340px;
-  border: 1px solid red;
+  height: 200px;
   margin: 0 2% 0 2%;
   padding: 0;
 }
@@ -51,20 +53,19 @@ body {
 #attacker-cards, #defender-cards {
   display: block;
   width: 100%;
-  height: 50%;
-  border: 1px solid red;
+  height: 170px;
   margin: 0;
   padding: 0;
 }
 
 #attacker-cards {
   position: relative;
-  top: 80px;
+  top: 40px;
 }
 
 #defender-cards {
   position: relative;
-  top: -65px;
+  top: -105px;
   left: 15px;
 }
 
@@ -72,8 +73,7 @@ body {
   display: inline-block;
   width: 50%;
   min-width: 690px;
-  height: 340px;
-  border: 1px solid red;
+  height: 250px;
   margin: 0 auto 0 0;
   padding: 0;
 }
@@ -82,21 +82,21 @@ body {
   display: block;
   width: 50%;
   height: 30px;
-  border: 1px solid red;
   margin-left: auto;
   margin-right: auto;
   padding: 0;
-  font-size: 20px;
+  font-size: 24px;
+  font-weight: bold;
   text-align: center;
+  color: white;
 }
 
 #buttons {
   display: block;
   width: 50%;
   height: 50px;
-  border: 1px solid red;
-  margin-left: auto;
   margin-right: auto;
+  margin-left: auto;
   padding: 0;
   text-align: center;
 }
@@ -106,7 +106,6 @@ body {
   width: 50%;
   min-width: 690px;
   height: 170px;
-  border: 1px solid red;
   margin-left: auto;
   margin-right: auto;
   padding: 0;
@@ -177,29 +176,26 @@ body {
   text-align: center;
   vertical-align: middle;
   color: white;
-  font-size: 20px;
+  font-size: 18px;
 }
 
-.deck {
+.trump {
+  position: relative;
+  top: -40px;
+  left: 65px;
+}
+
+.deck-top, .deck-inside {
+  position: relative;
+  left: -114px;
+}
+
+.deck-inside {
   width: 2px;
 }
 
-table {
-  background-color: #E5E5FF;
-  width: 80px;
-  align: center;
-  border-collapse: collapse;
-  border: 1px solid #898999;
-}
-
-td {
-  text-align: center;
-}
-
-.playable {
-  background-color: #FFE5FF;
-}
+.playable {}
 
 .disabled {
-  opacity: 0.5;
+  opacity: 0.3;
 }
