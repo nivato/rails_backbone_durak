@@ -1,7 +1,6 @@
 RailsBackboneDurak.Views.PileCards ||= {}
 
-class RailsBackboneDurak.Views.PileCards.View extends Backbone.View
-  template: JST["backbone/templates/pile_cards/view"]
+class RailsBackboneDurak.Views.PileCards.Pile extends Backbone.View
 
   initialize: () ->
     @options.eventer.bind("update_table", @update_cards)
@@ -10,13 +9,14 @@ class RailsBackboneDurak.Views.PileCards.View extends Backbone.View
   addAll: () =>
     @options.pileCards.each(@addOne)
 
-  addOne: (pileCard) =>
-    view = new RailsBackboneDurak.Views.PileCards.PileCardView({model : pileCard})
-    @$("tbody").append(view.render().el)
+  addOne: (pile) =>
+    for i in [1..pile.get("size") - 1]
+      $(@el).append("<div class='pile card-back-i'></div>")
+    $(@el).append('<div class="card-back-i"></div>')
 
   render: =>
+    $(@el).html("")
     $(@el).attr("id", "pile-cards")
-    $(@el).html(@template(pileCards: @options.pileCards.toJSON() ))
     @addAll()
     return this
 

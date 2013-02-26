@@ -11,7 +11,7 @@ class RailsBackboneDurak.Views.Game.IndexView extends Backbone.View
     deck_view = new RailsBackboneDurak.Views.DeckCards.Deck(eventer: @options.eventer, deckCards: @options.deck_cards)
     player_view = new RailsBackboneDurak.Views.PlayerCards.PlayerCards(eventer: @options.eventer, playerCards: @options.player_cards)
     computer_view = new RailsBackboneDurak.Views.ComputerCards.ComputerCards(eventer: @options.eventer, computerCards: @options.computer_cards)
-    pile_view = new RailsBackboneDurak.Views.PileCards.View(eventer: @options.eventer, pileCards: @options.pile_cards)
+    pile_view = new RailsBackboneDurak.Views.PileCards.Pile(eventer: @options.eventer, pileCards: @options.pile_cards)
     table_view = new RailsBackboneDurak.Views.Table.TableView(eventer: @options.eventer, attacker_cards: @options.attacker_cards, defender_cards: @options.defender_cards)
     $(@el).append(computer_view.render().el)
     $(@el).append("<div id='deck-pile-wrapper'></div>")
