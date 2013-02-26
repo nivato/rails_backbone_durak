@@ -14,7 +14,7 @@ html {
 
 body {
   width: 99%;
-  min-width: 980px;
+  min-width: 1200px;
   height: 99%;
 }
 
@@ -29,7 +29,8 @@ body {
 
 #computer-cards {
   display: block;
-  width: 980px;
+  width: 50%;
+  min-width: 690px;
   height: 170px;
   border: 1px solid red;
   margin-left: auto;
@@ -39,17 +40,19 @@ body {
 
 #deck-pile-wrapper {
   display: inline-block;
-  width: 320px;
+  width: 20%;
+  min-width: 280px;
   height: 400px;
   border: 1px solid red;
-  margin: 0;
+  margin: 0 2% 0 2%;
   padding: 0;
 }
 
 #deck-cards {
   display: block;
-  width: 300px;
-  height: 170px;
+  width: 100%;
+  min-width: 280px;
+  height: 50%;
   border: 1px solid red;
   margin: 0;
   padding: 0;
@@ -57,8 +60,9 @@ body {
 
 #pile-cards {
   display: block;
-  width: 300px;
-  height: 170px;
+  width: 100%;
+  min-width: 280px;
+  height: 50%;
   border: 1px solid red;
   margin: 0;
   padding: 0;
@@ -66,25 +70,26 @@ body {
 
 #table-cards {
   display: inline-block;
-  width: 980px;
+  width: 50%;
+  min-width: 690px;
   height: 400px;
   border: 1px solid red;
-  margin: 0;
+  margin: 0 2% 0 0;
   padding: 0;
 }
 
 #trump-card {
   display: inline-block;
-  width: 120px;
+  min-width: 120px;
   height: 400px;
   border: 1px solid red;
-  margin: 0;
+  margin: 0 auto 0 0;
   padding: 0;
 }
 
 #message {
   display: block;
-  width: 980px;
+  width: 50%;
   height: 60px;
   border: 1px solid red;
   margin-left: auto;
@@ -94,7 +99,7 @@ body {
 
 #buttons {
   display: block;
-  width: 980px;
+  width: 50%;
   height: 60px;
   border: 1px solid red;
   margin-left: auto;
@@ -104,7 +109,7 @@ body {
 
 #player-cards {
   display: block;
-  width: 980px;
+  width: 50%;
   height: 170px;
   border: 1px solid red;
   margin-left: auto;
