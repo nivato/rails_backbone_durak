@@ -161,6 +161,20 @@ body {
 .card-back-a { background: url('oxygen.png') -13px -679px no-repeat; }
 .card-back-i { background: url('oxygen.png') -134px -679px no-repeat; }
 
+.button-black { background: url('oxygen.png') -256px -680px no-repeat; }
+.button-red { background: url('oxygen.png') -256px -728px no-repeat; }
+
+.button-black, .button-red {
+  display: table-cell;
+  width: 120px;
+  height: 40px;
+  margin: auto;
+  text-align: center;
+  vertical-align: middle;
+  color: white;
+  font-size: 20px;
+}
+
 .deck, .pile {
   width: 2px;
 }
