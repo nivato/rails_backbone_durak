@@ -1,8 +1,6 @@
 RailsBackboneDurak.Views.ComputerCards ||= {}
 
-class RailsBackboneDurak.Views.ComputerCards.View extends Backbone.View
-  template: JST["backbone/templates/computer_cards/view"]
-
+class RailsBackboneDurak.Views.ComputerCards.ComputerCards extends Backbone.View
   initialize: () ->
     @options.eventer.bind("update_table", @update_cards)
     @options.computerCards.bind('reset', @render)
@@ -10,13 +8,13 @@ class RailsBackboneDurak.Views.ComputerCards.View extends Backbone.View
   addAll: () =>
     @options.computerCards.each(@addOne)
 
-  addOne: (computerCard) =>
-    view = new RailsBackboneDurak.Views.ComputerCards.ComputerCardView({model : computerCard})
-    @$("tbody").append(view.render().el)
+  addOne: (computer_cards) =>
+    for i in [1..computer_cards.get("size")]
+      $(@el).append('<div class="card-back-a"></div>')
 
   render: =>
+    $(@el).html("")
     $(@el).attr("id", "computer-cards")
-    $(@el).html(@template(computerCards: @options.computerCards.toJSON() ))
     @addAll()
     return this
 
