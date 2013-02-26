@@ -7,7 +7,6 @@ class RailsBackboneDurak.Views.Game.IndexView extends Backbone.View
   addAll: () =>
     messages_view = new RailsBackboneDurak.Views.Messages.Message(eventer: @options.eventer, messages: @options.messages)
     buttons_view = new RailsBackboneDurak.Views.Buttons.Buttons(eventer: @options.eventer, buttons: @options.buttons)
-    trump_view = new RailsBackboneDurak.Views.TrumpCards.TrumpCard(eventer: @options.eventer, trumpCards: @options.trump_cards)
     deck_view = new RailsBackboneDurak.Views.DeckCards.Deck(eventer: @options.eventer, deckCards: @options.deck_cards)
     player_view = new RailsBackboneDurak.Views.PlayerCards.PlayerCards(eventer: @options.eventer, playerCards: @options.player_cards)
     computer_view = new RailsBackboneDurak.Views.ComputerCards.ComputerCards(eventer: @options.eventer, computerCards: @options.computer_cards)
@@ -18,7 +17,6 @@ class RailsBackboneDurak.Views.Game.IndexView extends Backbone.View
     @$("#deck-pile-wrapper").append(deck_view.render().el)
     @$("#deck-pile-wrapper").append(pile_view.render().el)
     $(@el).append(table_view.render().el)
-    $(@el).append(trump_view.render().el)
     $(@el).append(messages_view.render().el)
     $(@el).append(buttons_view.render().el)
     $(@el).append(player_view.render().el)

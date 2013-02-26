@@ -5,7 +5,6 @@ RailsBackboneDurak::Application.routes.draw do
   resources :computer
   resources :attacker
   resources :defender
-  resources :trump
   resources :button
   resources :pile
 
