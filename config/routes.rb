@@ -6,8 +6,6 @@ RailsBackboneDurak::Application.routes.draw do
   resources :attacker
   resources :defender
   resources :button
-  resources :pile
-
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
