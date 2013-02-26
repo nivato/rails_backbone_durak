@@ -4,7 +4,7 @@ class AttackerController < ApplicationController
   # GET /attacker.json
   def index
     game = Game.for_session(session[:game_session]).first
-    respond_with Attacker.get_cards(game), :only => [:rank, :suit, :position]
+    respond_with Attacker.get_cards(game), :only => [:rank, :suit_char, :position]
   end
 
   # GET /decks/1

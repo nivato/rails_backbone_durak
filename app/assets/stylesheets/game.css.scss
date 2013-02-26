@@ -48,20 +48,9 @@ body {
   padding: 0;
 }
 
-#deck-cards {
+#deck-cards, #pile-cards, #attacker-cards, #defender-cards {
   display: block;
   width: 100%;
-  min-width: 280px;
-  height: 50%;
-  border: 1px solid red;
-  margin: 0;
-  padding: 0;
-}
-
-#pile-cards {
-  display: block;
-  width: 100%;
-  min-width: 280px;
   height: 50%;
   border: 1px solid red;
   margin: 0;
