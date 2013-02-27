@@ -4,14 +4,16 @@ class RailsBackboneDurak.Views.PlayerCards.Card extends Backbone.View
   events:
     "click .playable" : "play_card"
   
-  tagName: "a"
-  
   render: ->
     if @model.get("playable")
       state = "playable"
       $(@el).css("cursor","pointer");
     else
       state = "disabled"
+    if @model.get("size") > 6
+      width = Math.round(680/@model.get("size"))
+      $(@el).css("width", width)
+    $(@el).attr("class", "card")
     $(@el).append("<img class='#{state} card-#{@model.get("rank") + @model.get("suit_char")}' />")
     return this
 

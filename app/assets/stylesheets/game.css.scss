@@ -19,7 +19,7 @@ body {
   background-color: #333333;
 }
 
-#game, #computer-cards, #deck-cards, #attacker-cards, #defender-cards, #table-cards, #message, #buttons, #player-cards {
+#game, #computer-cards, #deck-cards, #attacker-cards, #defender-cards, #table-cards, #message, #buttons, #player-cards, .card {
   //border: 1px solid red;
 }
 
@@ -31,7 +31,7 @@ body {
   padding: 0;
 }
 
-#computer-cards {
+#computer-cards, #player-cards {
   display: block;
   width: 50%;
   min-width: 690px;
@@ -102,26 +102,15 @@ body {
   text-align: center;
 }
 
-#player-cards {
-  display: block;
-  width: 50%;
-  min-width: 690px;
-  height: 170px;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 0;
-}
-
 .card-Ah, .card-6h, .card-7h, .card-8h, .card-9h, .card-10h, .card-Jh, .card-Qh, .card-Kh,
 .card-As, .card-6s, .card-7s, .card-8s, .card-9s, .card-10s, .card-Js, .card-Qs, .card-Ks,
 .card-Ad, .card-6d, .card-7d, .card-8d, .card-9d, .card-10d, .card-Jd, .card-Qd, .card-Kd,
 .card-Ac, .card-6c, .card-7c, .card-8c, .card-9c, .card-10c, .card-Jc, .card-Qc, .card-Kc,
-.card-back-a, .card-back-i {
-  display: inline-block;
+.card-back-a, .card-back-i, .card {
+  display: block;
   float: left;
   width: 114px;
   height: 161px;
-  margin: auto;
 }
 
 .card-Ah { background: url('oxygen.png') -13px -8px no-repeat; }

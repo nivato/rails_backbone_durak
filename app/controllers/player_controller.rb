@@ -4,7 +4,12 @@ class PlayerController < ApplicationController
   # GET /player.json
   def index
     game = Game.for_session(session[:game_session]).first
-    respond_with Player.get_cards_marked_with_playable_flag(game), :only => [:id, :rank, :suit_char, :position, :playable]
+    player_cards = Player.get_cards_marked_with_playable_flag(game)
+    size = player_cards.size
+    player_cards.each() do |card|
+      card["size"] = size
+    end
+    respond_with player_cards, :only => [:id, :rank, :suit_char, :size, :playable]
   end
 
   # DELETE /decks/1
