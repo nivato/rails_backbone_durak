@@ -14,7 +14,7 @@ class PlayerController < ApplicationController
     game = Game.for_session(session[:game_session]).first
     if game.players_turn?
       Player.play_card(game, card)
-      unless game.finished
+      unless game.finished || game.defender_state == "defeated"
         Computer.beat_card(game, card)
       end
     else
