@@ -181,6 +181,15 @@ body {
   text-shadow: 2px 2px 2px #FFFFFF;
 }
 
+.button-black:hover, .button-red:hover, .playable:hover {
+    box-shadow: 0 0 9px rgba(255,255,255,.8);
+    -moz-box-shadow: 0 0 9px rgba(255,255,255,.8);
+    -webkit-box-shadow: 0 0 9px rgba(255,255,255,.8);
+    border-radius: 6px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+}
+
 .trump {
   position: relative;
   top: -40px;
@@ -195,8 +204,6 @@ body {
 .deck-inside {
   width: 2px;
 }
-
-.playable {}
 
 .disabled {
   opacity: 0.3;
