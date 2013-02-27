@@ -13,10 +13,10 @@ class RailsBackboneDurak.Views.ComputerCards.ComputerCards extends Backbone.View
       if computer_cards.get("size") > 6
         width = Math.round(680/computer_cards.get("size"))
         for i in [1..computer_cards.get("size")]
-          $(@el).append("<div class='card' style='width: #{width}px;'><img class='card-back-a' /></div>")
+          $(@el).append("<div class='card' style='width: #{width}px;'><div class='card-back-a'></div></div>")
       else
         for i in [1..computer_cards.get("size")]
-          $(@el).append('<div class="card"><img class="card-back-a" /></div>')
+          $(@el).append('<div class="card"><div class="card-back-a"></div></div>')
 
   render: =>
     $(@el).html("")
