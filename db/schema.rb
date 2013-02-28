@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130225113446) do
+ActiveRecord::Schema.define(:version => 20130228071505) do
 
   create_table "cardholders", :force => true do |t|
     t.string   "ch_type"
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(:version => 20130225113446) do
     t.integer  "trump"
     t.boolean  "finished",       :default => false
     t.string   "message"
+    t.string   "state"
   end
 
   add_index "games", ["game_session"], :name => "index_games_on_game_session"

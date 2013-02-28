@@ -1,4 +1,4 @@
-class Cards
+class Card2
   
   @@cards = {
     "1"   => {"rank" => "6",  "rank_number" => 6,   "suit" => "s", "sign" => "6\u2660"},
