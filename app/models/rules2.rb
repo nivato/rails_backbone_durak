@@ -5,7 +5,7 @@ class Rules2
   end
   
   def has_cards?
-    return get_cards(game).size > 0
+    return get_cards.size > 0
   end
   
   def select_higher_cards_of_same_suit(attackers_card, cards_in_hand)
@@ -41,7 +41,7 @@ class Rules2
     return cards_of_same_rank
   end
   
-  def choose_lowest_trump_card(cards_in_hand, trump)
+  def select_lowest_trump_card(cards_in_hand, trump)
     lowest_trump_card = nil
     cards_of_trump_suit = get_cards_of_trump_suit(cards_in_hand, trump)
     unless cards_of_trump_suit == []
@@ -50,11 +50,12 @@ class Rules2
     return lowest_trump_card
   end
   
-  def choose_lowest_card(cards_in_hand)
+  def select_lowest_card(cards_in_hand)
     lowest_card = nil
     ranks = cards_in_hand.collect do |card|
       Card2.rank_number(card)
     end
+    ranks = ranks.uniq
     min_rank = ranks.to_a.min
     cards.each do |card|
       lowest_card = card if Card2.rank_number(card) == min_rank
