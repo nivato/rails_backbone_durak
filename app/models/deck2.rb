@@ -20,12 +20,8 @@ class Deck2
   end
   
   def serve_cards(number_of_cards)
-    cards_to_serve = []
-    number_of_cards.times do |i|
-      unless @cards.empty?
-        cards_to_serve << @cards.shift
-      end
-    end
+    cards_to_serve = @cards.first(number_of_cards)
+    @cards.drop(cards_to_serve.size)
     return cards_to_serve
   end
   

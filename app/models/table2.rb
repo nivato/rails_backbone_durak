@@ -20,4 +20,12 @@ class Table
     return @defener_cards
   end
   
+  def receive_attacking_card(card)
+    @attacker_cards << card
+  end
+  
+  def receive_defending_card(card)
+    @defener_cards << card
+  end
+  
 end

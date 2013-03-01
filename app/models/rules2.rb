@@ -8,9 +8,9 @@ class Rules2
     return get_cards.size > 0
   end
   
-  def select_higher_cards_of_same_suit(attackers_card, cards_in_hand)
+  def select_higher_cards_of_same_suit(attackers_card)
     cards_of_higher_rank = []
-    cards_of_same_suit = cards_in_hand.collect do |card|
+    cards_of_same_suit = get_cards.collect do |card|
       card if Card2.suit(card) == Card2.suit(attackers_card)
     end
     cards_of_same_suit = cards_of_same_suit.compact
@@ -22,18 +22,18 @@ class Rules2
     return cards_of_higher_rank.compact
   end
   
-  def get_cards_of_trump_suit(cards_in_hand, trump)
-    cards_of_trump_suit = cards_in_hand.collect do |card|
+  def select_cards_of_trump_suit(trump)
+    cards_of_trump_suit = get_cards.collect do |card|
       card if Card2.suit(card) == Card2.suit(trump)
     end
     return cards_of_trump_suit.compact
   end
   
-  def get_cards_of_same_ranks(cards_on_table, cards_in_hand)
+  def get_cards_of_same_ranks(cards_on_table)
     cards_of_same_rank = []
     table_ranks = cards_on_table.collect{|card| Card2.rank_number(card)}
     table_ranks = table_ranks.uniq
-    cards_in_hand.each do |card|
+    get_cards.each do |card|
       if table_ranks.include? Card2.rank_number(card)
         cards_of_same_rank << card
       end
@@ -41,11 +41,11 @@ class Rules2
     return cards_of_same_rank
   end
   
-  def select_lowest_trump_card(cards_in_hand, trump)
+  def select_lowest_trump_card(trump)
     lowest_trump_card = nil
-    cards_of_trump_suit = get_cards_of_trump_suit(cards_in_hand, trump)
+    cards_of_trump_suit = select_cards_of_trump_suit(trump)
     unless cards_of_trump_suit == []
-      lowest_trump_card = choose_lowest_card(cards_of_trump_suit)
+      lowest_trump_card = select_lowest_card(cards_of_trump_suit)
     end
     return lowest_trump_card
   end

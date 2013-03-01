@@ -53,6 +53,7 @@ class GameController < ApplicationController
   def setup_game_session
     unless session[:game_session]
       session[:game_session] = Game.set_up_game
+      #session[:game_session] = Process.new(nil).set_up_game
     end
   end
   

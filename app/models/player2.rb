@@ -14,7 +14,7 @@ class Player2 < Rules2
     @cards = @cards + cards
   end
   
-  def cards_required()
+  def cards_required
     cards_required = 6 - get_cards.size
     return cards_required >= 0 ? cards_required : 0
   end
