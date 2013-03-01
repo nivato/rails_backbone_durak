@@ -27,7 +27,8 @@ class PlayerController < ApplicationController
       unless game.finished
         Computer.play_card(game)
       end
-    end  
+    end
+    #Process.new(session[:game_session]).accept_players_action(params[:id])
     respond_with []
   end
 

@@ -47,19 +47,59 @@ class Process
     return game_session
   end
   
+  def accept_players_action(card)
+    if @attacker == Key.player
+      @player.play_card(card)
+      check_whether_game_is_finished
+      unless @game_finished || @defender_state == Key.defeated
+        make_computer_beat_the_card(card)
+      end
+    else
+      @player.play_card(card)
+      @table.receive_defending_card(card)
+      check_whether_game_is_finished
+      unless @game_finished
+        make_computer_play
+      end
+    end  
+  end
+  
+  def make_computer_beat_the_card(attackers_card)
+    computer_cards = get_cards(game)
+    defenders_card = @computer.choose_defending_card(attackers_card, @trump)
+    if defenders_card != nil
+      @computer.play_card(defenders_card)
+      @table.receive_defending_card(defenders_card)
+      if get_players_playable_cards == []
+        @defender_state = Key.won
+      end
+    else
+      @defender_state = Key.defeated
+    end
+    check_whether_game_is_finished
+  end
+  
+  def get_message
+    message_hash = {}
+    unless @message == nil
+      message_hash[Key.message] = @message
+      message_hash["id"] = 1
+    end
+    return message_hash
+  end
+  
   def make_computer_play
     attackers_card = @computer.choose_attacking_card(@table.get_cards, @trump)
     if (attackers_card != nil) && @player.has_cards? && !(@table.get_attacker_cards.size >= 6)
-      @computer.throw_card_away(attackers_card)
-      @table.receive_attacking_card(card)
-      
+      @computer.play_card(attackers_card)
+      @table.receive_attacking_card(attackers_card)
       if get_players_playable_cards == []
         @defender_state = Key.defeated
       end
     else
       @defender_state = Key.won
     end
-    Game.check_whether_game_is_finished(game)
+    check_whether_game_is_finished
   end
   
   def check_whether_game_is_finished

@@ -11,6 +11,7 @@ class GameController < ApplicationController
       message["id"] = 1
     end
     respond_with message
+    #respond_with Process.new(session[:game_session]).get_message
   end
   
   # GET /games/1
