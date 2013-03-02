@@ -3,11 +3,7 @@ class ComputerController < ApplicationController
   # GET /computer
   # GET /computer.json
   def index
-    game = Game.for_session(session[:game_session]).first
-    computer_cards = {}
-    computer_cards["size"] = Computer.get_cards(game).size
-    computer_cards["id"] = 1
-    respond_with computer_cards
+    respond_with GameProcess.new(session[:game_session]).get_computer_cards_number
   end
 
   # GET /decks/1

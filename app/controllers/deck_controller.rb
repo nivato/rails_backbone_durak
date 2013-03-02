@@ -3,13 +3,7 @@ class DeckController < ApplicationController
   # GET /deck
   # GET /deck.json
   def index
-    game = Game.for_session(session[:game_session]).first
-    deck_cards = {}
-    trump = game.get_trump
-    deck_cards["size"] = Deck.get_cards(game).size
-    deck_cards["trump"] = trump.rank + trump.suit_char
-    deck_cards["id"] = 1
-    respond_with deck_cards
+    respond_with GameProcess.new(session[:game_session]).get_deck_cards
   end
 
   # GET /decks/1

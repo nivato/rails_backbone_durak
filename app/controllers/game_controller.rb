@@ -4,14 +4,7 @@ class GameController < ApplicationController
   # GET /game
   # GET /game.json
   def index
-    game = Game.for_session(session[:game_session]).first
-    message = {}
-    unless game.message == nil
-      message["message"] = game.message
-      message["id"] = 1
-    end
-    respond_with message
-    #respond_with Process.new(session[:game_session]).get_message
+    respond_with GameProcess.new(session[:game_session]).get_message
   end
   
   # GET /games/1
@@ -53,8 +46,7 @@ class GameController < ApplicationController
   
   def setup_game_session
     unless session[:game_session]
-      session[:game_session] = Game.set_up_game
-      #session[:game_session] = Process.new(nil).set_up_game
+      session[:game_session] = GameProcess.new(nil).set_up_game
     end
   end
   

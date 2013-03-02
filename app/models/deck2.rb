@@ -21,7 +21,7 @@ class Deck2
   
   def serve_cards(number_of_cards)
     cards_to_serve = @cards.first(number_of_cards)
-    @cards.drop(cards_to_serve.size)
+    @cards = @cards.drop(cards_to_serve.size)
     return cards_to_serve
   end
   

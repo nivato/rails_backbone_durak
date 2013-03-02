@@ -10,18 +10,18 @@ class RailsBackboneDurak.Views.DeckCards.Deck extends Backbone.View
 
   addOne: (deck) =>
     if deck.get("size") > 2
-      $(@el).append("<div class='trump card-#{deck.get("trump")}'></div>")
+      $(@el).append("<div class='trump #{deck.get("trump_class")}'></div>")
       for i in [1..deck.get("size") - 2]
         $(@el).append("<div class='deck-inside card-back-a'></div>")
       $(@el).append('<div class="deck-top card-back-a"></div>')
     else
       if deck.get("size") == 2
-        $(@el).append("<div class='trump card-#{deck.get("trump")}'></div>")
+        $(@el).append("<div class='trump #{deck.get("trump_class")}'></div>")
         $(@el).append('<div class="deck-top card-back-a"></div>')
       if deck.get("size") == 1
-        $(@el).append("<div class='trump card-#{deck.get("trump")}'></div>")
+        $(@el).append("<div class='trump #{deck.get("trump_class")}'></div>")
       if deck.get("size") == 0
-        $(@el).append("<div class='trump disabled card-#{deck.get("trump")}'></div>")
+        $(@el).append("<div class='trump disabled #{deck.get("trump_class")}'></div>")
 
   render: =>
     $(@el).html("")

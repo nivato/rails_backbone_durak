@@ -1,4 +1,4 @@
-class Table
+class Table2
   
   @attacker_cards = []
   @defener_cards = []
@@ -26,6 +26,13 @@ class Table
   
   def receive_defending_card(card)
     @defener_cards << card
+  end
+  
+  def clear
+    cards_cleared = get_cards
+    @attacker_cards = []
+    @defener_cards = []
+    return cards_cleared
   end
   
 end

@@ -57,7 +57,7 @@ class Rules2
     end
     ranks = ranks.uniq
     min_rank = ranks.to_a.min
-    cards.each do |card|
+    cards_in_hand.each do |card|
       lowest_card = card if Card2.rank_number(card) == min_rank
     end
     return lowest_card

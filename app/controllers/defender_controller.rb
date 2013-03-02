@@ -3,8 +3,7 @@ class DefenderController < ApplicationController
   # GET /defender
   # GET /defender.json
   def index
-    game = Game.for_session(session[:game_session]).first
-    respond_with Defender.get_cards(game), :only => [:rank, :suit_char, :position]
+   respond_with GameProcess.new(session[:game_session]).get_defender_rich_cards
   end
 
   # GET /decks/1

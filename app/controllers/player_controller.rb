@@ -3,32 +3,13 @@ class PlayerController < ApplicationController
   # GET /player
   # GET /player.json
   def index
-    game = Game.for_session(session[:game_session]).first
-    player_cards = Player.get_cards_marked_with_playable_flag(game)
-    size = player_cards.size
-    player_cards.each() do |card|
-      card["size"] = size
-    end
-    respond_with player_cards, :only => [:id, :rank, :suit_char, :size, :playable]
+    respond_with GameProcess.new(session[:game_session]).get_player_rich_cards
   end
 
   # DELETE /decks/1
   # DELETE /decks/1.json
   def destroy
-    card = Card.find(params[:id])
-    game = Game.for_session(session[:game_session]).first
-    if game.players_turn?
-      Player.play_card(game, card)
-      unless game.finished || game.defender_state == "defeated"
-        Computer.beat_card(game, card)
-      end
-    else
-      Player.beat_with(game, card)
-      unless game.finished
-        Computer.play_card(game)
-      end
-    end
-    #Process.new(session[:game_session]).accept_players_action(params[:id])
+    GameProcess.new(session[:game_session]).accept_players_card_action(params[:id].to_i)
     respond_with []
   end
 

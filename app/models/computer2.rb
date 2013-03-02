@@ -40,10 +40,10 @@ class Computer2 < Rules2
           attacking_card = card if Card2.rank_number(card) == min_rank
         end
       else
-        attacking_card = select_lowest_trump_card(@cards, trump)
+        attacking_card = select_lowest_trump_card(trump)
       end
     else
-      attacking_card = get_cards_of_same_ranks(cards_on_table, @cards).first
+      attacking_card = get_cards_of_same_ranks(cards_on_table).first
     end
     return attacking_card
   end

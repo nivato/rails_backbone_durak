@@ -11,47 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130228071505) do
-
-  create_table "cardholders", :force => true do |t|
-    t.string   "ch_type"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "cards", :force => true do |t|
-    t.string   "rank"
-    t.string   "suit"
-    t.string   "image"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-    t.integer  "rank_number"
-    t.string   "suit_char"
-  end
-
-  create_table "game_logs", :force => true do |t|
-    t.integer  "game_id"
-    t.integer  "cardholder_id"
-    t.integer  "card_id"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
-    t.integer  "position"
-    t.integer  "played_by"
-  end
-
-  add_index "game_logs", ["game_id", "cardholder_id", "card_id"], :name => "index_game_logs_on_game_id_and_cardholder_id_and_card_id"
+ActiveRecord::Schema.define(:version => 20130302111910) do
 
   create_table "games", :force => true do |t|
     t.string   "game_session"
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
-    t.integer  "attacker"
-    t.string   "defender_state"
-    t.integer  "defender"
-    t.integer  "trump"
-    t.boolean  "finished",       :default => false
-    t.string   "message"
-    t.string   "state"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.text     "state"
   end
 
   add_index "games", ["game_session"], :name => "index_games_on_game_session"

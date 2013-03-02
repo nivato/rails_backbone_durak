@@ -3,40 +3,15 @@ class ButtonController < ApplicationController
   # GET /button
   # GET /button.json
   def index
-    game = Game.for_session(session[:game_session]).first
-    respond_with Button.get_buttons(game)
+    respond_with GameProcess.new(session[:game_session]).get_buttons
   end
   
   # DELETE /buttons/1
   # DELETE /buttons/1.json
   def destroy
-    game = Game.for_session(session[:game_session]).first
-    if game.finished
-      session[:game_session] = Game.set_up_game
-      game = Game.for_session(session[:game_session]).first
-    else
-      if (game.defender_state == "won") || (game.defender_state == "continues")
-        if Attacker.get_cards(game).size > Defender.get_cards(game).size
-          if game.players_turn?
-            Computer.take_cards_from_table(game)
-          else
-            Player.take_cards_from_table(game)
-          end
-        else
-          Table.throw_out_cards_to_pile(game)
-          Game.switch_players(game)
-        end
-      else
-        if game.players_turn?
-          Computer.take_cards_from_table(game)
-        else
-          Player.take_cards_from_table(game)
-        end
-      end
-      Deck.serve_cards(game)
-      if game.computers_turn?
-        Computer.play_card(game)
-      end
+    game_session = GameProcess.new(session[:game_session]).accept_players_button_action
+    unless game_session == nil
+      session[:game_session] = game_session
     end
     respond_with []
   end

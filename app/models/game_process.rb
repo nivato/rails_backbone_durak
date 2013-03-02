@@ -1,4 +1,4 @@
-class Process
+class GameProcess
   
   @game = nil
   @player = nil
@@ -12,7 +12,7 @@ class Process
   @message = nil
   
   def initialize(game_session)
-    unless game_session
+    unless game_session == nil
       @game = Game.for_session(game_session).first
       state = JSON.parse(@game.state)
       @player = Player2.new(state[Key.player_cards])
@@ -38,18 +38,61 @@ class Process
     @computer.receive_cards(@deck.serve_cards(@computer.cards_required))
     @attacker = define_attacker
     @defender_state = Key.continues
+    @table = Table2.new([], [])
     @game_finished = false
     @message = nil
-    if attacker == Key.computers
+    if @attacker == Key.computer
       make_computer_play
     end
     store
     return game_session
   end
   
-  def accept_players_action(card)
+  def accept_players_button_action
+    if @game_finished
+      game_session = GameProcess.new(nil).set_up_game
+      return game_session
+    else
+      if (@defender_state == Key.won) || (@defender_state == Key.continues)
+        if @table.get_attacker_cards.size > @table.get_defender_cards.size
+          if @attacker == Key.player
+            @computer.receive_cards(@table.clear)
+          else
+            @player.receive_cards(@table.clear)
+          end
+        else
+          @table.clear
+          if @attacker == Key.player
+            @attacker = Key.computer
+          else
+            @attacker = Key.player
+          end
+        end
+      else
+        if @attacker == Key.player
+          @computer.receive_cards(@table.clear)
+        else
+          @player.receive_cards(@table.clear)
+        end
+      end
+      @defender_state = Key.continues
+      if @attacker == Key.player
+        @computer.receive_cards(@deck.serve_cards(@computer.cards_required))
+        @player.receive_cards(@deck.serve_cards(@player.cards_required))
+      else
+        @player.receive_cards(@deck.serve_cards(@player.cards_required))
+        @computer.receive_cards(@deck.serve_cards(@computer.cards_required))
+        make_computer_play
+      end
+    end
+    store
+    return nil
+  end
+  
+  def accept_players_card_action(card)
     if @attacker == Key.player
       @player.play_card(card)
+      @table.receive_attacking_card(card)
       check_whether_game_is_finished
       unless @game_finished || @defender_state == Key.defeated
         make_computer_beat_the_card(card)
@@ -61,11 +104,105 @@ class Process
       unless @game_finished
         make_computer_play
       end
-    end  
+    end
+    store
   end
   
+  def get_player_rich_cards
+    player_cards = @player.get_cards
+    size = player_cards.size
+    playable_cards = get_players_playable_cards
+    rich_cards = []
+    player_cards.each do |card_id|
+      card = {}
+      card["id"] = card_id
+      card["card_class"] = "card-#{Card2.rank(card_id) + Card2.suit(card_id)}"
+      card["size"] = size
+      if playable_cards.include? card_id
+        card["playable"] = true
+      else
+        card["playable"] = false
+      end
+      rich_cards << card
+    end
+    return rich_cards
+  end
+  
+  def get_attacker_rich_cards
+    attacker_cards = @table.get_attacker_cards
+    rich_cards = []
+    attacker_cards.each do |card_id|
+      card = {}
+      card["id"] = card_id
+      card["card_class"] = "card-#{Card2.rank(card_id) + Card2.suit(card_id)}"
+      rich_cards << card
+    end
+    return rich_cards
+  end
+  
+  def get_defender_rich_cards
+    defender_cards = @table.get_defender_cards
+    rich_cards = []
+    defender_cards.each do |card_id|
+      card = {}
+      card["id"] = card_id
+      card["card_class"] = "card-#{Card2.rank(card_id) + Card2.suit(card_id)}"
+      rich_cards << card
+    end
+    return rich_cards
+  end
+  
+  def get_computer_cards_number
+    computer_cards_number = {}
+    computer_cards_number["size"] = @computer.get_cards.size
+    computer_cards_number["id"] = 1
+    return computer_cards_number
+  end
+  
+  def get_deck_cards
+    deck_cards = {}
+    deck_cards["size"] = @deck.get_cards.size
+    deck_cards["trump_class"] = "card-#{Card2.rank(@trump) + Card2.suit(@trump)}"
+    deck_cards["id"] = 1
+    return deck_cards
+  end
+  
+  def get_buttons
+    table_cards = @table.get_cards
+    buttons = {}
+    if ((@attacker == Key.player) && (table_cards != [])) || ((@attacker == Key.computer) && (@defender_state == Key.won))
+      buttons["next"] = true
+    else
+      buttons["next"] = false
+    end
+    if (@attacker == Key.computer) && ((@defender_state == Key.continues) || (@defender_state == Key.defeated)) && (table_cards != [])
+      buttons["take_cards"] = true
+    else
+      buttons["take_cards"] = false
+    end
+    if @game_finished
+      buttons["new_game"] = true
+      buttons["next"] = false
+      buttons["take_cards"] = false
+    else
+      buttons["new_game"] = false
+    end
+    buttons["id"] = 1
+    return buttons
+  end
+  
+  def get_message
+    message_hash = {}
+    unless @message == nil
+      message_hash[Key.message] = @message
+      message_hash["id"] = 1
+    end
+    return message_hash
+  end
+  
+  private
+  
   def make_computer_beat_the_card(attackers_card)
-    computer_cards = get_cards(game)
     defenders_card = @computer.choose_defending_card(attackers_card, @trump)
     if defenders_card != nil
       @computer.play_card(defenders_card)
@@ -77,15 +214,6 @@ class Process
       @defender_state = Key.defeated
     end
     check_whether_game_is_finished
-  end
-  
-  def get_message
-    message_hash = {}
-    unless @message == nil
-      message_hash[Key.message] = @message
-      message_hash["id"] = 1
-    end
-    return message_hash
   end
   
   def make_computer_play
@@ -121,7 +249,7 @@ class Process
           if @table.get_cards == []
             return player_cards
           else
-            return @player.get_cards_of_same_ranks(table_cards)
+            return @player.get_cards_of_same_ranks(@table.get_cards)
           end
         else
           return []
@@ -179,7 +307,7 @@ class Process
     state[Key.defender_state] = Key.id_for(@defender_state)
     state[Key.game_finished] = @game_finished
     state[Key.message] = @message
-    @game.update_attribute("state", state.as_json)
+    @game.update_attribute("state", state.to_json)
   end
   
 end

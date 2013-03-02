@@ -14,7 +14,7 @@ class RailsBackboneDurak.Views.PlayerCards.Card extends Backbone.View
       width = Math.round(680/@model.get("size"))
       $(@el).css("width", width)
     $(@el).attr("class", "card")
-    $(@el).append("<div class='#{state} card-#{@model.get("rank") + @model.get("suit_char")}'></div>")
+    $(@el).append("<div class='#{state} #{@model.get("card_class")}'></div>")
     return this
 
   play_card: ->

@@ -10,7 +10,7 @@ class RailsBackboneDurak.Views.DefenderCards.DefenderCards extends Backbone.View
     @options.defenderCards.each(@addOne)
 
   addOne: (defenderCard) =>
-    $(@el).append("<div class='card-#{defenderCard.get("rank") + defenderCard.get("suit_char")}'></div>")
+    $(@el).append("<div class='#{defenderCard.get("card_class")}'></div>")
 
   render: =>
     $(@el).html("")
