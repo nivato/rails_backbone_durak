@@ -116,6 +116,13 @@ body {
   height: 161px;
 }
 
+.player-card {
+  display: block;
+  float: right;
+  width: 114px;
+  height: 161px;
+}
+
 .card-Ah { background: url('oxygen.png') -13px -8px no-repeat; }
 .card-6h { background: url('oxygen.png') -134px -8px no-repeat; }
 .card-7h { background: url('oxygen.png') -255px -8px no-repeat; }
@@ -197,6 +204,12 @@ body {
   width: 2px;
 }
 
+.playable {
+  position: relative;
+  z-index: 2;
+}
 .disabled {
+  position: relative;
   opacity: 0.3;
+  z-index: 1;
 }
