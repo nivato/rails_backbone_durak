@@ -60,7 +60,7 @@ class Computer2 < Rules2
   
   def choose_higher_card_or_trump(attackers_card, trump)
     defenders_card = choose_higher_card_of_same_suit(attackers_card)
-    unless defenders_card == nil
+    if defenders_card == nil
       defenders_card = select_lowest_trump_card(trump)
     end
     return defenders_card
