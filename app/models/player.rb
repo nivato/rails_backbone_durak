@@ -1,4 +1,4 @@
-class Player2 < Rules2
+class Player < Rules
   
   @cards = []
   

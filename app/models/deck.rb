@@ -1,4 +1,4 @@
-class Deck2
+class Deck
   
   @cards = []
   

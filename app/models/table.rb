@@ -1,4 +1,4 @@
-class Table2
+class Table
   
   @attacker_cards = []
   @defener_cards = []

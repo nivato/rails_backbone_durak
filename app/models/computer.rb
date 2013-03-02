@@ -1,4 +1,4 @@
-class Computer2 < Rules2
+class Computer < Rules
   
   @cards = []
   
@@ -27,17 +27,17 @@ class Computer2 < Rules2
     attacking_card = nil
     if cards_on_table == []
       cards_of_not_trump_suit = @cards.collect do |card|
-        card if Card2.suit(card) != Card2.suit(trump)
+        card if Card.suit(card) != Card.suit(trump)
       end
       cards_of_not_trump_suit = cards_of_not_trump_suit.compact
       if cards_of_not_trump_suit != []
         ranks = cards_of_not_trump_suit.collect do |card|
-          Card2.rank_number(card)
+          Card.rank_number(card)
         end
         ranks = ranks.uniq
         min_rank = ranks.to_a.min
         cards_of_not_trump_suit.each do |card|
-          attacking_card = card if Card2.rank_number(card) == min_rank
+          attacking_card = card if Card.rank_number(card) == min_rank
         end
       else
         attacking_card = select_lowest_trump_card(trump)
@@ -50,7 +50,7 @@ class Computer2 < Rules2
   
   def choose_defending_card(attackers_card, trump)
     defenders_card = nil
-    if Card2.suit(attackers_card) == Card2.suit(trump)
+    if Card.suit(attackers_card) == Card.suit(trump)
       defenders_card = choose_higher_card_of_same_suit(attackers_card)
     else
       defenders_card = choose_higher_card_or_trump(attackers_card, trump)

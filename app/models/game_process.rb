@@ -15,10 +15,10 @@ class GameProcess
     unless game_session == nil
       @game = Game.for_session(game_session).first
       state = JSON.parse(@game.state)
-      @player = Player2.new(state[Key.player_cards])
-      @computer = Computer2.new(state[Key.computer_cards])
-      @deck = Deck2.new(state[Key.deck_cards])
-      @table = Table2.new(state[Key.attacker_cards], state[Key.defender_cards])
+      @player = Player.new(state[Key.player_cards])
+      @computer = Computer.new(state[Key.computer_cards])
+      @deck = Deck.new(state[Key.deck_cards])
+      @table = Table.new(state[Key.attacker_cards], state[Key.defender_cards])
       @trump = state[Key.trump]
       @attacker = Key.value_of(state[Key.attacker])
       @defender_state = Key.value_of(state[Key.defender_state])
@@ -30,15 +30,15 @@ class GameProcess
   def set_up_game
     game_session = Digest::SHA2.hexdigest("#{Time.now}")
     @game = Game.create(:game_session => game_session)
-    @deck = Deck2.new(Deck2.new_shuffled_deck)
+    @deck = Deck.new(Deck.new_shuffled_deck)
     @trump = @deck.define_trump
-    @player = Player2.new([])
-    @computer = Computer2.new([])
+    @player = Player.new([])
+    @computer = Computer.new([])
     @player.receive_cards(@deck.serve_cards(@player.cards_required))
     @computer.receive_cards(@deck.serve_cards(@computer.cards_required))
     @attacker = define_attacker
     @defender_state = Key.continues
-    @table = Table2.new([], [])
+    @table = Table.new([], [])
     @game_finished = false
     @message = nil
     if @attacker == Key.computer
@@ -116,7 +116,7 @@ class GameProcess
     player_cards.each do |card_id|
       card = {}
       card["id"] = card_id
-      card["card_class"] = "card-#{Card2.rank(card_id) + Card2.suit(card_id)}"
+      card["card_class"] = "card-#{Card.rank(card_id) + Card.suit(card_id)}"
       card["size"] = size
       if playable_cards.include? card_id
         card["playable"] = true
@@ -134,7 +134,7 @@ class GameProcess
     attacker_cards.each do |card_id|
       card = {}
       card["id"] = card_id
-      card["card_class"] = "card-#{Card2.rank(card_id) + Card2.suit(card_id)}"
+      card["card_class"] = "card-#{Card.rank(card_id) + Card.suit(card_id)}"
       rich_cards << card
     end
     return rich_cards
@@ -146,7 +146,7 @@ class GameProcess
     defender_cards.each do |card_id|
       card = {}
       card["id"] = card_id
-      card["card_class"] = "card-#{Card2.rank(card_id) + Card2.suit(card_id)}"
+      card["card_class"] = "card-#{Card.rank(card_id) + Card.suit(card_id)}"
       rich_cards << card
     end
     return rich_cards
@@ -162,7 +162,7 @@ class GameProcess
   def get_deck_cards
     deck_cards = {}
     deck_cards["size"] = @deck.get_cards.size
-    deck_cards["trump_class"] = "card-#{Card2.rank(@trump) + Card2.suit(@trump)}"
+    deck_cards["trump_class"] = "card-#{Card.rank(@trump) + Card.suit(@trump)}"
     deck_cards["id"] = 1
     return deck_cards
   end
@@ -257,7 +257,7 @@ class GameProcess
       else
         if (@defender_state == Key.continues)
           attackers_card = @table.get_attacker_cards.last
-          if Card2.suit(attackers_card) != Card2.suit(@trump)
+          if Card.suit(attackers_card) != Card.suit(@trump)
             return @player.select_higher_cards_of_same_suit(attackers_card) + @player.select_cards_of_trump_suit(@trump)
           else
             return @player.select_higher_cards_of_same_suit(attackers_card)
@@ -276,7 +276,7 @@ class GameProcess
     players_lowest_trump = @player.select_lowest_trump_card(@trump)
     computers_lowest_trump = @computer.select_lowest_trump_card(@trump)
     if (players_lowest_trump != nil) && (computers_lowest_trump != nil)
-      if Card2.rank_number(players_lowest_trump) < Card2.rank_number(computers_lowest_trump)
+      if Card.rank_number(players_lowest_trump) < Card.rank_number(computers_lowest_trump)
         return Key.player
       else
         return Key.computer
