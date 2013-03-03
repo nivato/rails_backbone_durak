@@ -7,7 +7,7 @@ class DropCardsTable < ActiveRecord::Migration
   def down
     create_table :cards do |t|
       t.string :rank
-      t.string :suite
+      t.string :suit
       t.string :image
       t.integer :rank_number
       t.string :suit_char
