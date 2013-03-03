@@ -14,16 +14,15 @@ class GameProcess
   def initialize(game_session)
     unless game_session == nil
       @game = Game.for_session(game_session).first
-      state = JSON.parse(@game.state)
-      @player = Player.new(state[Key.player_cards])
-      @computer = Computer.new(state[Key.computer_cards])
-      @deck = Deck.new(state[Key.deck_cards])
-      @table = Table.new(state[Key.attacker_cards], state[Key.defender_cards])
-      @trump = state[Key.trump]
-      @attacker = Key.value_of(state[Key.attacker])
-      @defender_state = Key.value_of(state[Key.defender_state])
-      @game_finished = state[Key.game_finished]
-      @message = state[Key.message]
+      @player = Player.new(JSON.parse(@game.player_cards))
+      @computer = Computer.new(JSON.parse(@game.computer_cards))
+      @deck = Deck.new(JSON.parse(@game.deck_cards))
+      @table = Table.new(JSON.parse(@game.attacker_cards), JSON.parse(@game.defender_cards))
+      @trump = @game.trump
+      @attacker = Key.value(@game.attacker)
+      @defender_state = Key.value(@game.defender_state)
+      @game_finished = @game.game_finished
+      @message = @game.message
     end
   end
   
@@ -296,18 +295,18 @@ class GameProcess
   end
   
   def store
-    state = {}
-    state[Key.deck_cards] = @deck.get_cards
-    state[Key.player_cards] = @player.get_cards
-    state[Key.computer_cards] = @computer.get_cards
-    state[Key.attacker_cards] = @table.get_attacker_cards
-    state[Key.defender_cards] = @table.get_defender_cards
-    state[Key.trump] = @trump
-    state[Key.attacker] = Key.id_for(@attacker)
-    state[Key.defender_state] = Key.id_for(@defender_state)
-    state[Key.game_finished] = @game_finished
-    state[Key.message] = @message
-    @game.update_attribute("state", state.to_json)
+    @game.update_attributes(
+      :deck_cards       => @deck.get_cards.to_s,
+      :player_cards     => @player.get_cards.to_s,
+      :computer_cards   => @computer.get_cards.to_s,
+      :attacker_cards   => @table.get_attacker_cards.to_s,
+      :defender_cards   => @table.get_defender_cards.to_s,
+      :trump            => @trump,
+      :attacker         => Key.id(@attacker),
+      :defender_state   => Key.id(@defender_state),
+      :game_finished    => @game_finished,
+      :message          => @message
+    )
   end
   
 end

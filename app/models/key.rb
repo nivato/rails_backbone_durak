@@ -78,11 +78,11 @@ class Key
     return @@keys[15]
   end
   
-  def self.id_for(value)
+  def self.id(value)
     return @@keys.key(value)
   end
   
-  def self.value_of(id)
+  def self.value(id)
     return @@keys[id]
   end
   
