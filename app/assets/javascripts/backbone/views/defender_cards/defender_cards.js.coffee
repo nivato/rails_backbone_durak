@@ -1,8 +1,8 @@
 RailsBackboneDurak.Views.DefenderCards ||= {}
 
 class RailsBackboneDurak.Views.DefenderCards.DefenderCards extends Backbone.View
-  
-  initialize: () ->
+
+  initialize: (@options) =>
     @options.eventer.bind("update_table", @update_cards)
     @options.defenderCards.bind('reset', @render)
 
@@ -19,4 +19,4 @@ class RailsBackboneDurak.Views.DefenderCards.DefenderCards extends Backbone.View
     return this
 
   update_cards: =>
-    @options.defenderCards.fetch()
+    @options.defenderCards.fetch(reset: true)

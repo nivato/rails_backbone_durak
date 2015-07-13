@@ -1,10 +1,14 @@
 RailsBackboneDurak.Views.PlayerCards ||= {}
 
 class RailsBackboneDurak.Views.PlayerCards.Card extends Backbone.View
+
   events:
     "click .playable" : "play_card"
-  
-  render: ->
+
+  initialize: (@options) =>
+    super
+
+  render: =>
     if @model.get("playable")
       state = "playable"
       $(@el).css("cursor","pointer");
@@ -17,11 +21,11 @@ class RailsBackboneDurak.Views.PlayerCards.Card extends Backbone.View
     $(@el).append("<div class='#{state} #{@model.get("card_class")}'></div>")
     return this
 
-  play_card: ->
+  play_card: =>
     @model.destroy({success: @update_table_callback})
     this.remove()
     return false
-  
+
   update_table_callback: =>
     @options.eventer.trigger("update_table")
     @options.eventer.trigger("update_message")

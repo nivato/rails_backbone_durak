@@ -1,7 +1,10 @@
 RailsBackboneDurak.Views.Table ||= {}
 
 class RailsBackboneDurak.Views.Table.TableView extends Backbone.View
-  
+
+  initialize: (@options) =>
+    super
+
   addAll: () =>
     attacker_view = new RailsBackboneDurak.Views.AttackerCards.AttackerCards(eventer: @options.eventer, attackerCards: @options.attacker_cards)
     defender_view = new RailsBackboneDurak.Views.DefenderCards.DefenderCards(eventer: @options.eventer, defenderCards: @options.defender_cards)

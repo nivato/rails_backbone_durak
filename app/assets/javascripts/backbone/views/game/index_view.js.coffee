@@ -1,9 +1,9 @@
 RailsBackboneDurak.Views.Game ||= {}
 
 class RailsBackboneDurak.Views.Game.IndexView extends Backbone.View
-  constructor: () ->
+  initialize: (@options) =>
     super
-  
+
   addAll: () =>
     messages_view = new RailsBackboneDurak.Views.Messages.Message(eventer: @options.eventer, messages: @options.messages)
     buttons_view = new RailsBackboneDurak.Views.Buttons.Buttons(eventer: @options.eventer, buttons: @options.buttons)

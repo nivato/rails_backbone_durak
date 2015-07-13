@@ -1,7 +1,7 @@
 RailsBackboneDurak.Views.DeckCards ||= {}
 
 class RailsBackboneDurak.Views.DeckCards.Deck extends Backbone.View
-  initialize: () ->
+  initialize: (@options) =>
     @options.eventer.bind("update_deck", @update_deck)
     @options.deckCards.bind('reset', @render)
 
@@ -28,6 +28,6 @@ class RailsBackboneDurak.Views.DeckCards.Deck extends Backbone.View
     $(@el).attr("id", "deck-cards")
     @addAll()
     return this
-  
+
   update_deck: =>
-    @options.deckCards.fetch()
+    @options.deckCards.fetch(reset: true)

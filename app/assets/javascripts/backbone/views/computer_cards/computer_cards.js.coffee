@@ -1,7 +1,7 @@
 RailsBackboneDurak.Views.ComputerCards ||= {}
 
 class RailsBackboneDurak.Views.ComputerCards.ComputerCards extends Backbone.View
-  initialize: () ->
+  initialize: (@options) =>
     @options.eventer.bind("update_table", @update_cards)
     @options.computerCards.bind('reset', @render)
 
@@ -25,4 +25,4 @@ class RailsBackboneDurak.Views.ComputerCards.ComputerCards extends Backbone.View
     return this
 
   update_cards: =>
-    @options.computerCards.fetch()
+    @options.computerCards.fetch(reset: true)

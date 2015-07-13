@@ -1,8 +1,8 @@
 RailsBackboneDurak.Views.Buttons ||= {}
 
 class RailsBackboneDurak.Views.Buttons.Buttons extends Backbone.View
-  
-  initialize: () ->
+
+  initialize: (@options) =>
     @options.eventer.bind("update_table", @update_buttons)
     @options.buttons.bind('reset', @render)
 
@@ -18,6 +18,6 @@ class RailsBackboneDurak.Views.Buttons.Buttons extends Backbone.View
     $(@el).attr("id", "buttons")
     @addAll()
     return this
-  
+
   update_buttons: =>
-    @options.buttons.fetch()
+    @options.buttons.fetch(reset: true)

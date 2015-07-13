@@ -1,8 +1,8 @@
 RailsBackboneDurak.Views.AttackerCards ||= {}
 
 class RailsBackboneDurak.Views.AttackerCards.AttackerCards extends Backbone.View
-  
-  initialize: () ->
+
+  initialize: (@options) ->
     @options.eventer.bind("update_table", @update_cards)
     @options.attackerCards.bind('reset', @render)
 
@@ -19,4 +19,4 @@ class RailsBackboneDurak.Views.AttackerCards.AttackerCards extends Backbone.View
     return this
 
   update_cards: =>
-    @options.attackerCards.fetch()
+    @options.attackerCards.fetch(reset: true)

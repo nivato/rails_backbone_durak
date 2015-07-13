@@ -1,9 +1,11 @@
 RailsBackboneDurak.Views.Buttons ||= {}
 
 class RailsBackboneDurak.Views.Buttons.Button extends Backbone.View
+  initialize: (@options) =>
+    super
 
   tagName: "a"
-  
+
   events:
     "click #next"           : "end_of_turn"
     "click #take_cards"     : "end_of_turn"
@@ -20,15 +22,15 @@ class RailsBackboneDurak.Views.Buttons.Button extends Backbone.View
       $(@el).css("cursor","pointer");
       $(@el).append("<div class='button-black' id='new_game' onmousedown=\"this.className='button-red';\" onmouseup=\"this.className='button-black';\">New Game</div>")
     return this
-  
+
   end_of_turn: =>
     @model.destroy({success: @end_of_turn_callback})
     _.delay(@remove_me, 1000)
     return false
-  
+
   remove_me: =>
     this.remove()
-  
+
   end_of_turn_callback: =>
     @options.eventer.trigger("update_table")
     @options.eventer.trigger("update_deck")
