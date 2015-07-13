@@ -15,7 +15,6 @@ class RailsBackboneDurak.Routers.GameRouter extends Backbone.Router
     @eventer = new RailsBackboneDurak.EventAggregators.Eventer()
     @view = new RailsBackboneDurak.Views.Game.IndexView(eventer: @eventer, messages: messages, buttons: buttons, deck_cards: deck_cards, player_cards: player_cards, computer_cards: computer_cards, attacker_cards: attacker_cards, defender_cards: defender_cards)
     $("body").html(@view.render().el)
-    console.log(@view.el)
     messages.fetch(reset: true)
     buttons.fetch(reset: true)
     deck_cards.fetch(reset: true)

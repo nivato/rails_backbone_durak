@@ -11,7 +11,7 @@ class RailsBackboneDurak.Views.Buttons.Button extends Backbone.View
     "click #take_cards"     : "end_of_turn"
     "click #new_game"       : "end_of_turn"
 
-  render: ->
+  render: =>
     if @model.get("next")
       $(@el).css("cursor","pointer");
       $(@el).append("<div class='button-black' id='next' onmousedown=\"this.className='button-red';\" onmouseup=\"this.className='button-black';\">Next</div>")
